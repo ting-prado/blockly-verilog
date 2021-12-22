@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Blockly-Verilog</title>
+    <link href="./reset.css" type="text/css" rel="stylesheet">
+    <link href="./style.css" type="text/css" rel="stylesheet">
+    <script src="../blockly_compressed.js"></script>
+    <script src="../blocks_compressed.js"></script>
+    <script src="../msg/js/en.js"></script>
+    <script src="../blocks/custom_blocks.js"></script>
+</head>
+<body>
+    <div id="blocklyDiv"></div>
+    <div class="outputs">
+        <div id="diagram">
+            <div class="label-text">Logic Diagram</div>
+            <div id="diagramOutput"></div>
+        </div>
+        <div id="code">
+            <div class="label-text">Verilog Code</div>
+            <div id="codeOutput"></div>
+        </div>
+    </div>
+    <xml xmlns="https://developers.google.com/blockly/xml" id="toolbox" style="display: none">
+        <category name="Port Declarations" colour="#745ba5">
+            <block type="new_module_block"></block>
+            <block type="set_block"></block>
+            <block type="end_module_block"></block>
+        </category>
+        <category name="Conditional" colour="#5b67a5">
+            <block type="controls_if"></block>
+        </category>
+        <category name="Variables" colour="#5b80a5">
+            <block type="output_block"></block>
+        </category>
+        <category name="Values" colour="#5ba58c">
+            <block type="input_1"></block>
+            <block type="input_0"></block>
+        </category>
+        <category name="Logic Gates" colour="#0cbaa6">
+            <block type="logic_blocks"></block>
+            <block type="not_block"></block>
+        </category>
+    </xml>
+    <script src="./workspace.js"></script>
+</body>
+</html>
