@@ -36,16 +36,18 @@
     right: 0;
 }
 
+#showCode:hover {
+    cursor: pointer;
+}
+
 #codeOutput {
     border: 1px solid gray;
     margin: 0.5rem;
     height: 92.5%;
-    overflow-y: scroll;
 }
 
 #diagramOutput {
     border: 1px solid gray;
     margin: 0.5rem;
     height: 79%;
-    overflow: scroll;
 }

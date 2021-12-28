@@ -33,4 +33,21 @@ const options = {
 };
 
 /* Inject your workspace */ 
-const workspace = Blockly.inject('blocklyDiv', options);
+//const workspace = Blockly.inject('blocklyDiv', options);
+
+var demoWorkspace = Blockly.inject('blocklyDiv',
+        {media: '../../media/',
+         toolbox: document.getElementById('toolbox')});
+    Blockly.Xml.domToWorkspace(document.getElementById('toolbox'),
+                               demoWorkspace);
+
+const codeBtn = document.querySelector('#showCode');
+
+const showCode = () => {
+	const codeOutput = document.querySelector('#codeOutput');
+	Blockly.Verilog.INFINITE_LOOP_TRAP = null;
+	var code = Blockly.Verilog.workspaceToCode(demoWorkspace);
+	codeOutput.textContent = code;
+};
+
+codeBtn.addEventListener('click', showCode);

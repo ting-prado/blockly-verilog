@@ -6,6 +6,9 @@
     <link href="./style.css" type="text/css" rel="stylesheet">
     <script src="../blockly_compressed.js"></script>
     <script src="../blocks_compressed.js"></script>
+    <script src='../closure/goog/base.js'></script>
+    <script src='../generators/verilog.js'></script>
+    <script src='../generators/verilog/logic_gates.js'></script>
     <script src="../msg/js/en.js"></script>
     <script src="../blocks/custom_blocks.js"></script>
 </head>
@@ -17,7 +20,7 @@
             <div id="diagramOutput"></div>
         </div>
         <div id="code">
-            <div class="label-text">Verilog Code</div>
+            <div class="label-text" id='showCode'>Show Verilog Code</div>
             <div id="codeOutput"></div>
         </div>
     </div>
