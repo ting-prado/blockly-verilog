@@ -65,25 +65,18 @@ Blockly.Blocks['output_block'] = {
   }
 };
 
-Blockly.Blocks['new_module_block'] = {
+Blockly.Blocks['module_block'] = {
   init: function() {
     this.appendDummyInput()
-        .appendField("Create a new module:")
-        .appendField(new Blockly.FieldTextInput("MODULE_NAME"), "module_name");
-    this.setInputsInline(false);
-    this.setNextStatement(true, null);
-    this.setColour(330);
- this.setTooltip("");
- this.setHelpUrl("");
-  }
-};
-
-Blockly.Blocks['end_module_block'] = {
-  init: function() {
+        .appendField("Create module:")
+        .appendField(new Blockly.FieldTextInput("design_name"), "module_name");
+    this.appendStatementInput("module_content")
+        .setCheck(null);
     this.appendDummyInput()
         .appendField("end module");
-    this.setPreviousStatement(true, null);
-    this.setColour(330);
+    this.setInputsInline(false);
+    this.setNextStatement(true, null);
+    this.setColour(300);
  this.setTooltip("");
  this.setHelpUrl("");
   }
