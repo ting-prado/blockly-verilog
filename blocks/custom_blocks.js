@@ -70,6 +70,12 @@ Blockly.Blocks['module_block'] = {
     this.appendDummyInput()
         .appendField("Create module:")
         .appendField(new Blockly.FieldTextInput("design_name"), "module_name");
+    this.appendDummyInput()
+        .appendField("Assign ports:");
+    this.appendStatementInput("port_list")
+        .setCheck('Ports');
+    this.appendDummyInput()
+        .appendField("Module content:");
     this.appendStatementInput("module_content")
         .setCheck(null);
     this.appendDummyInput()
@@ -86,12 +92,12 @@ Blockly.Blocks['set_block'] = {
   init: function() {
     this.appendDummyInput()
         .appendField("set")
-        .appendField(new Blockly.FieldTextInput("VARIABLE"), "new_var")
+        .appendField(new Blockly.FieldVariable("PORT_NAME"), "NAME")
         .appendField("as")
         .appendField(new Blockly.FieldDropdown([["INPUT","new_input"], ["OUTPUT","new_output"], ["WIRE","new_wire"]]), "port_types");
-    this.setPreviousStatement(true, null);
-    this.setNextStatement(true, null);
-    this.setColour(330);
+    this.setPreviousStatement(true, "Ports");
+    this.setNextStatement(true, "Ports");
+    this.setColour(240);
  this.setTooltip("");
  this.setHelpUrl("");
   }
