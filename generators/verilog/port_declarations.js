@@ -19,7 +19,7 @@ Blockly.Verilog['module_block'] = function(block) {
     var statements_port_list = Blockly.Verilog.statementToCode(block, 'port_list');
     var statements_module_content = Blockly.Verilog.statementToCode(block, 'module_content');
     // TODO: Assemble Verilog into code variable.
-    var code = 'module ' + text_module_name.trim().replace(/ /g, "_") + '( ' + statements_port_list + ' ):' + '<br />' + '<br />' + 'end module' ;
+    var code = 'module ' + text_module_name.trim().replace(/ /g, "_") + '( ' + statements_port_list + ' ):' + '<br />' + '<br />' + statements_module_content + '<br />' + 'end module' ;
     return code;
   };
 

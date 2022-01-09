@@ -102,3 +102,14 @@ Blockly.Blocks['set_block'] = {
  this.setHelpUrl("");
   }
 };
+
+Blockly.Blocks['input_var'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField(new Blockly.FieldVariable("INPUT"), "input_var");
+    this.setOutput(true, null);
+    this.setColour(105);
+ this.setTooltip("");
+ this.setHelpUrl("");
+  }
+};

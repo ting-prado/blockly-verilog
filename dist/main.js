@@ -33,8 +33,6 @@ const options = {
 };
 
 /* Inject your workspace */ 
-//const workspace = Blockly.inject('blocklyDiv', options);
-
 var demoWorkspace = Blockly.inject('blocklyDiv',
         {media: '../../media/',
          toolbox: document.getElementById('toolbox')});
