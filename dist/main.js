@@ -33,11 +33,7 @@ const options = {
 };
 
 /* Inject your workspace */ 
-var demoWorkspace = Blockly.inject('blocklyDiv',
-        {media: '../../media/',
-         toolbox: document.getElementById('toolbox')});
-    Blockly.Xml.domToWorkspace(document.getElementById('toolbox'),
-                               demoWorkspace);
+var demoWorkspace = Blockly.inject('blocklyDiv', options);
 
 const codeBtn = document.querySelector('#showCode');
 
