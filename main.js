@@ -35,8 +35,6 @@ const options = {
 /* Inject your workspace */
 var demoWorkspace = Blockly.inject('blocklyDiv', options);
 
-//const codeBtn = document.querySelector('#showCode');
-
 const showCode = () => {
   const codeOutput = document.querySelector('#codeOutput');
   Blockly.Verilog.INFINITE_LOOP_TRAP = null;
