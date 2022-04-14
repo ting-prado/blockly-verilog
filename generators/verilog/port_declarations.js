@@ -49,10 +49,11 @@ Blockly.Verilog['set_block'] = function (block) {
   );
   var dropdown_port_types = block.getFieldValue('port_types');
   // TODO: Assemble Verilog into code variable.
+
   var code =
-    dropdown_port_types.replace(/\s+/g, ' ').replace(/\s/g, '_').slice(4) +
+    dropdown_port_types.trim().replace(/ /g, '_').slice(4) +
     ' ' +
-    variable_name;
+    variable_name.split(/[^a-zA-Z0-9]+/).join('_');
   if (
     block.previousConnection.targetConnection.sourceBlock_.type == 'set_block'
   ) {
