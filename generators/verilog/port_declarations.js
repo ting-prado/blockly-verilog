@@ -25,14 +25,16 @@ Blockly.Verilog['module_block'] = function (block) {
     block,
     'module_content'
   );
+
   // TODO: Assemble Verilog into code variable.
   var mod_name = text_module_name.split(/[^a-zA-Z0-9]+/);
+  let inputs = customMod.getPorts();
 
   var code =
     'module ' +
     mod_name.join('_') +
     '( ' +
-    statements_port_list +
+    inputs +
     ' ):' +
     '<br />' +
     '<br />' +
@@ -54,10 +56,6 @@ Blockly.Verilog['set_block'] = function (block) {
   var modified_name = variable_name.split(/[^a-zA-Z0-9]+/).join('_');
 
   customMod.addVariable(modified_name, block.id, dropdown_port_types.slice(4));
-  // switch (dropdown_port_types) {
-  //   case 'new_input':
-  //     console.log('This is an input');
-  // }
 
   // TODO: Assemble Verilog into code variable.
 
@@ -80,4 +78,5 @@ Blockly.Verilog['set_block'] = function (block) {
   //     '&emsp;' +
   //     code;
   // }
+  return '';
 };
