@@ -20,6 +20,7 @@ Blockly.Verilog['module_block'] = function (block) {
     block,
     'port_list'
   );
+
   var statements_module_content = Blockly.Verilog.statementToCode(
     block,
     'module_content'
@@ -43,32 +44,40 @@ Blockly.Verilog['module_block'] = function (block) {
 };
 
 Blockly.Verilog['set_block'] = function (block) {
+  var dropdown_port_types = block.getFieldValue('port_types');
+
   var variable_name = Blockly.Verilog.nameDB_.getName(
     block.getFieldValue('NAME'),
     Blockly.Variables.NAME_TYPE
   );
-  var dropdown_port_types = block.getFieldValue('port_types');
+
+  var modified_name = variable_name.split(/[^a-zA-Z0-9]+/).join('_');
+
+  customMod.addVariable(modified_name, block.id, dropdown_port_types.slice(4));
+  // switch (dropdown_port_types) {
+  //   case 'new_input':
+  //     console.log('This is an input');
+  // }
+
   // TODO: Assemble Verilog into code variable.
 
-  var code =
-    dropdown_port_types.trim().replace(/ /g, '_').slice(4) +
-    ' ' +
-    variable_name.split(/[^a-zA-Z0-9]+/).join('_');
-  if (
-    block.previousConnection.targetConnection.sourceBlock_.type == 'set_block'
-  ) {
-    code =
-      ',' +
-      '<br />' +
-      '&emsp;' +
-      '&emsp;' +
-      '&emsp;' +
-      '&emsp;' +
-      '&emsp;' +
-      '&emsp;' +
-      '&emsp;' +
-      code;
-  }
-
-  return code;
+  // var code =
+  //   dropdown_port_types.trim().replace(/ /g, '_').slice(4) +
+  //   ' ' +
+  //   variable_name.split(/[^a-zA-Z0-9]+/).join('_');
+  // if (
+  //   block.previousConnection.targetConnection.sourceBlock_.type == 'set_block'
+  // ) {
+  //   code =
+  //     ',' +
+  //     '<br />' +
+  //     '&emsp;' +
+  //     '&emsp;' +
+  //     '&emsp;' +
+  //     '&emsp;' +
+  //     '&emsp;' +
+  //     '&emsp;' +
+  //     '&emsp;' +
+  //     code;
+  // }
 };

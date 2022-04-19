@@ -42,4 +42,6 @@ const showCode = () => {
   codeOutput.innerHTML = code;
 };
 
+demoWorkspace.addChangeListener(customMod.checkDeleted);
+
 demoWorkspace.addChangeListener(showCode);
