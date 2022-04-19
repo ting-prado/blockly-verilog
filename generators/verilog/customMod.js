@@ -1,17 +1,8 @@
 const customMod = (() => {
   const ports = {
-    input: [
-      { name: 'input1', id: 'id1' },
-      { name: 'input2', id: 'id2' },
-    ],
-    output: [
-      { name: 'output1', id: 'id3' },
-      { name: 'output2', id: 'id4' },
-    ],
-    wire: [
-      { name: 'wire1', id: 'id5' },
-      { name: 'wire2', id: 'id6' },
-    ],
+    input: [],
+    output: [],
+    wire: [],
   };
 
   const checkDuplicates = (id) => {
@@ -29,6 +20,7 @@ const customMod = (() => {
   };
 
   const checkDeleted = () => {
+    //Delete from array if block id not found in workspace
     for (const types in ports) {
       if (ports[types].length > 0) {
         ports[types].forEach((data) => {
@@ -47,12 +39,15 @@ const customMod = (() => {
   const addVariable = (name, id, type) => {
     let isDup = checkDuplicates(id);
     if (isDup === '') {
+      //No duplicate existed
       ports[type].push({ name, id });
     } else {
       if (isDup.type !== type) {
+        //Check if variable type was changed
         removeDup(isDup.type, isDup.index);
         ports[type].push({ name, id });
       } else {
+        //Variable name was changed
         ports[isDup.type][isDup.index].name = name;
       }
     }
