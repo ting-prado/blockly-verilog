@@ -54,11 +54,11 @@ const customMod = (() => {
     if (ports['input'].length > 0) {
       inputs = 'input';
       for (let i = 0; i < ports['input'].length; i++) {
-        if (i !== ports['input'].length - 1) {
-          inputs = inputs + ' ' + ports['input'][i].name + ',';
-        } else {
-          inputs = inputs + ' ' + ports['input'][i].name;
-        }
+        inputs =
+          inputs +
+          ' ' +
+          ports['input'][i].name +
+          (i !== ports['input'].length - 1 ? ',' : '');
       }
     }
     return inputs;
@@ -69,11 +69,11 @@ const customMod = (() => {
     if (ports['output'].length > 0) {
       outputs = 'output';
       for (let i = 0; i < ports['output'].length; i++) {
-        if (i !== ports['output'].length - 1) {
-          outputs = outputs + ' ' + ports['output'][i].name + ',';
-        } else {
-          outputs = outputs + ' ' + ports['output'][i].name;
-        }
+        outputs =
+          outputs +
+          ' ' +
+          ports['output'][i].name +
+          (i !== ports['output'].length - 1 ? ',' : '');
       }
     }
     return outputs;
@@ -84,18 +84,28 @@ const customMod = (() => {
     if (ports['wire'].length > 0) {
       wires = 'wire';
       for (let i = 0; i < ports['wire'].length; i++) {
-        if (i !== ports['wire'].length - 1) {
-          wires = wires + ' ' + ports['wire'][i].name + ',';
-        } else {
-          wires = wires + ' ' + ports['wire'][i].name;
-        }
+        wires =
+          wires +
+          ' ' +
+          ports['wire'][i].name +
+          (i !== ports['wire'].length - 1 ? ',' : '');
       }
     }
     return wires;
   };
 
   const getPorts = () => {
-    return orgInputs() + orgOutputs() + orgWires();
+    return (
+      orgInputs() +
+      (ports['input'].length > 0 && ports['output'].length > 0 ? '; ' : ' ') +
+      orgOutputs() +
+      (ports['input'].length > 0 &&
+      ports['output'].length > 0 &&
+      ports['wire'].length > 0
+        ? '; '
+        : ' ') +
+      orgWires()
+    );
   };
 
   return { addVariable, checkDeleted, getPorts };
