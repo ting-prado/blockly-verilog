@@ -97,12 +97,14 @@ const customMod = (() => {
   const getPorts = () => {
     return (
       orgInputs() +
-      (ports['input'].length > 0 && ports['output'].length > 0 ? '; ' : ' ') +
+      (ports['input'].length > 0 && ports['output'].length > 0
+        ? ', ' + '</br>'
+        : ' ') +
       orgOutputs() +
       (ports['input'].length > 0 &&
       ports['output'].length > 0 &&
       ports['wire'].length > 0
-        ? '; '
+        ? ', ' + '</br>'
         : ' ') +
       orgWires()
     );
