@@ -18,8 +18,6 @@ const customMod = (() => {
     return index;
   };
 
-  const getFirstMod = () => modules[0].id;
-
   const ports = {
     input: [],
     output: [],
@@ -86,70 +84,58 @@ const customMod = (() => {
     }
   };
 
-  const orgInputs = (index) => {
+  const orgInputs = (index, connected) => {
     let inputs = '';
-    if (modules[index].ports['input'].length > 0) {
+
+    if (modules[index].ports['input'].length > 0 && connected.length > 0) {
       inputs = 'input';
       for (let i = 0; i < modules[index].ports['input'].length; i++) {
-        inputs =
-          inputs +
-          ' ' +
-          modules[index].ports['input'][i].name +
-          (i !== modules[index].ports['input'].length - 1 ? ',' : '');
+        connected.forEach((str) => {
+          if (str === modules[index].ports['input'][i].name) {
+            inputs =
+              inputs +
+              ' ' +
+              modules[index].ports['input'][i].name +
+              (i !== modules[index].ports['input'].length - 1 ? ',' : '');
+          }
+        });
       }
     }
+
     return inputs;
   };
 
-  const orgOutputs = (index) => {
+  const orgOutputs = (index, connected) => {
     let outputs = '';
     if (modules[index].ports['output'].length > 0) {
       outputs = 'output';
       for (let i = 0; i < modules[index].ports['output'].length; i++) {
-        outputs =
-          outputs +
-          ' ' +
-          modules[index].ports['output'][i].name +
-          (i !== modules[index].ports['output'].length - 1 ? ',' : '');
+        connected.forEach((str) => {
+          if (str === modules[index].ports['output'][i].name) {
+            outputs =
+              outputs +
+              ' ' +
+              modules[index].ports['output'][i].name +
+              (i !== modules[index].ports['output'].length - 1 ? ',' : '');
+          }
+        });
       }
     }
     return outputs;
   };
 
-  const orgWires = (index) => {
-    let wires = '';
-    if (modules[index].ports['wire'].length > 0) {
-      wires = 'wire';
-      for (let i = 0; i < modules[index].ports['wire'].length; i++) {
-        wires =
-          wires +
-          ' ' +
-          modules[index].ports['wire'][i].name +
-          (i !== modules[index].ports['wire'].length - 1 ? ',' : '');
-      }
-    }
-    return wires;
-  };
-
-  const getPorts = (modId) => {
+  const getPorts = (modId, connected) => {
     let index = getModIndex(modId);
+    let inputs = orgInputs(index, connected);
+    let outputs = orgOutputs(index, connected);
     return (
-      orgInputs(index) +
-      (modules[index].ports['input'].length > 0 &&
-      modules[index].ports['output'].length > 0
-        ? ', ' + '</br>'
-        : ' ') +
-      orgOutputs(index) +
-      ((modules[index].ports['input'].length > 0 ||
-        modules[index].ports['output'].length > 0) &&
-      modules[index].ports['wire'].length > 0
-        ? ', ' + '</br>'
-        : ' ') +
-      orgWires(index)
+      inputs +
+      (inputs.length > 0 && outputs.length > 0 ? ', ' + '</br>' : ' ') +
+      outputs
     );
   };
 
-  return { addVariable, checkDeleted, getPorts, addModule, getFirstMod };
+  return { addVariable, checkDeleted, getPorts, addModule };
 })();
 
 const Module = (name, id) => {
@@ -159,7 +145,6 @@ const Module = (name, id) => {
     ports: {
       input: [],
       output: [],
-      wire: [],
     },
   };
 };

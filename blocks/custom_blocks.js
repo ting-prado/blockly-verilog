@@ -81,7 +81,6 @@ Blockly.Blocks['module_block'] = {
     this.appendStatementInput('module_content').setCheck(null);
     this.appendDummyInput().appendField('end module');
     this.setInputsInline(false);
-    this.setNextStatement(true, null);
     this.setColour(300);
     this.setTooltip('');
     this.setHelpUrl('');
@@ -98,7 +97,6 @@ Blockly.Blocks['set_block'] = {
         new Blockly.FieldDropdown([
           ['INPUT', 'new_input'],
           ['OUTPUT', 'new_output'],
-          ['WIRE', 'new_wire'],
         ]),
         'port_types'
       );
