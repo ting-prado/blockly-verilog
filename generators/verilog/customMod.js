@@ -54,15 +54,23 @@ const customMod = (() => {
   };
 
   const checkDeleted = () => {
-    for (const types in ports) {
-      if (ports[types].length > 0) {
-        ports[types].forEach((data) => {
-          if (!Object.keys(Blockly.mainWorkspace.blockDB_).includes(data.id)) {
-            ports[types].splice(ports[types].indexOf(data), 1);
-          }
-        });
+    for (let i = 0; i < modules.length; i++) {
+      for (const types in modules[i].ports) {
+        if (modules[i].ports[types].length > 0) {
+          modules[i].ports[types].forEach((data) => {
+            if (
+              !Object.keys(Blockly.mainWorkspace.blockDB_).includes(data.id)
+            ) {
+              modules[i].ports[types].splice(
+                modules[i].ports[types].indexOf(data),
+                1
+              );
+            }
+          });
+        }
       }
     }
+    console.log(modules);
   };
 
   const removeDup = (modIndex, type, index) => {
