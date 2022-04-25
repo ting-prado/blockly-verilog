@@ -55,19 +55,23 @@ const customMod = (() => {
 
   const checkDeleted = () => {
     for (let i = 0; i < modules.length; i++) {
-      for (const types in modules[i].ports) {
-        if (modules[i].ports[types].length > 0) {
-          modules[i].ports[types].forEach((data) => {
-            if (
-              !Object.keys(Blockly.mainWorkspace.blockDB_).includes(data.id)
-            ) {
-              modules[i].ports[types].splice(
-                modules[i].ports[types].indexOf(data),
-                1
-              );
-            }
-          });
+      if (Object.keys(Blockly.mainWorkspace.blockDB_).includes(modules[i].id)) {
+        for (const types in modules[i].ports) {
+          if (modules[i].ports[types].length > 0) {
+            modules[i].ports[types].forEach((data) => {
+              if (
+                !Object.keys(Blockly.mainWorkspace.blockDB_).includes(data.id)
+              ) {
+                modules[i].ports[types].splice(
+                  modules[i].ports[types].indexOf(data),
+                  1
+                );
+              }
+            });
+          }
         }
+      } else {
+        modules.splice(modules[i], 1);
       }
     }
     console.log(modules);
