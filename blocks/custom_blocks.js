@@ -56,12 +56,19 @@ Blockly.Blocks['input_0'] = {
   },
 };
 
-Blockly.Blocks['output_block'] = {
+Blockly.Blocks['assign_block'] = {
   init: function () {
     this.appendValueInput('NAME')
-      .setCheck('String')
-      .appendField('Assign')
-      .appendField(new Blockly.FieldVariable('OUTPUT'), 'output');
+      .setCheck(null)
+      .appendField('Assign ')
+      .appendField(
+        new Blockly.FieldDropdown([
+          ['option', 'OPTIONNAME'],
+          ['option', 'OPTIONNAME'],
+          ['option', 'OPTIONNAME'],
+        ]),
+        'VARIABLES'
+      );
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setColour(255);
