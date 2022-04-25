@@ -132,7 +132,7 @@ const customMod = (() => {
     return outputs;
   };
 
-  const getPorts = (modId, connected) => {
+  const displayPorts = (modId, connected) => {
     let index = getModIndex(modId);
     let inputs = orgInputs(index, connected);
     let outputs = orgOutputs(index, connected);
@@ -143,7 +143,7 @@ const customMod = (() => {
     );
   };
 
-  return { addVariable, checkDeleted, getPorts, addModule };
+  return { addVariable, checkDeleted, displayPorts, addModule };
 })();
 
 const Module = (name, id) => {
