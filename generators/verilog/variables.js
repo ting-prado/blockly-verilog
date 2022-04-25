@@ -14,18 +14,15 @@ goog.provide('Blockly.Verilog.variables');
 
 goog.require('Blockly.Verilog');
 
-Blockly.Verilog['output_block'] = function (block) {
-  var variable_output = Blockly.Verilog.nameDB_.getName(
-    block.getFieldValue('output'),
-    Blockly.Variables.NAME_TYPE
-  );
+Blockly.Verilog['assign_block'] = function (block) {
+  var dropdown_variables = block.getFieldValue('VARIABLES');
   var value_name = Blockly.Verilog.valueToCode(
     block,
     'NAME',
     Blockly.Verilog.ORDER_ATOMIC
   );
   // TODO: Assemble Verilog into code variable.
-  var code = 'assign ' + variable_output + ' = ' + value_name + ';' + '<br/>';
+  var code = `assign ${dropdown_variables} = value ${value_name};\n`;
   return code;
 };
 

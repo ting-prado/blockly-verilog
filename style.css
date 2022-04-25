@@ -16,10 +16,6 @@
   user-select: none;
 }
 
-#code {
-  font-family: 'Courier New', Courier, monospace;
-}
-
 #diagram {
   box-sizing: border-box;
   border: 3px solid #ddd;
@@ -28,6 +24,7 @@
 }
 
 #code {
+  font-family: 'Courier New', Courier, monospace;
   box-sizing: border-box;
   border: 3px solid #ddd;
   height: 100vh;
@@ -42,6 +39,7 @@
   margin: 0.5rem;
   height: 92.5%;
   font-size: 0.9rem;
+  white-space: pre-line;
 }
 
 #diagramOutput {

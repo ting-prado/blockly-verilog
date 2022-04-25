@@ -33,19 +33,7 @@ Blockly.Verilog['module_block'] = function (block) {
   const connected = statements_port_list.trim().split(' ');
   let vars = customMod.displayPorts(block.id, connected);
 
-  var code =
-    'module ' +
-    mod_name +
-    '( ' +
-    vars +
-    ' ):' +
-    '<br />' +
-    '<br />' +
-    statements_module_content +
-    '<br />' +
-    'end module' +
-    '<br/>' +
-    '<br/>';
+  var code = `modules ${mod_name} ( ${vars} ): \n\n ${statements_module_content}\nend module\n\n`;
 
   return code;
 };

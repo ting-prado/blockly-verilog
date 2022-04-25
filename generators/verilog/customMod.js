@@ -138,7 +138,7 @@ const customMod = (() => {
     let outputs = orgOutputs(index, connected);
     return (
       inputs +
-      (inputs.length > 0 && outputs.length > 0 ? ', ' + '</br>' : ' ') +
+      (inputs.length > 0 && outputs.length > 0 ? ', ' + '\n' : ' ') +
       outputs
     );
   };

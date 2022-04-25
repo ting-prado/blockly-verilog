@@ -39,7 +39,7 @@ const showCode = () => {
   const codeOutput = document.querySelector('#codeOutput');
   Blockly.Verilog.INFINITE_LOOP_TRAP = null;
   var code = Blockly.Verilog.workspaceToCode(demoWorkspace);
-  codeOutput.innerHTML = code;
+  codeOutput.textContent = code;
 };
 
 demoWorkspace.addChangeListener(customMod.checkDeleted);
