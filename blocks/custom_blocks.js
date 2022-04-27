@@ -58,22 +58,31 @@ Blockly.Blocks['input_0'] = {
 
 Blockly.Blocks['assign_block'] = {
   init: function () {
+    let options = this.giveOptions();
     this.appendValueInput('NAME')
       .setCheck(null)
       .appendField('Assign ')
-      .appendField(
-        new Blockly.FieldDropdown([
-          ['option', 'OPTIONNAME'],
-          ['option', 'OPTIONNAME'],
-          ['option', 'OPTIONNAME'],
-        ]),
-        'VARIABLES'
-      );
+      .appendField(new Blockly.FieldDropdown(options), 'VARIABLES');
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setColour(255);
     this.setTooltip('');
     this.setHelpUrl('');
+    console.log(Blockly.FieldDropdown);
+  },
+
+  giveOptions: function () {
+    let id = this.id;
+    return this.generateOptions(id);
+  },
+
+  generateOptions: function (id) {
+    let options = [
+      ['i', 'I'],
+      ['a', 'A'],
+    ];
+    console.log(id);
+    return options;
   },
 };
 
@@ -94,16 +103,38 @@ Blockly.Blocks['module_block'] = {
   },
 };
 
+// Blockly.Blocks['set_block'] = {
+//   init: function () {
+//     this.appendDummyInput()
+//       .appendField('set')
+//       .appendField(new Blockly.FieldVariable('PORT_NAME'), 'NAME')
+//       .appendField('as')
+//       .appendField(
+//         new Blockly.FieldDropdown([
+//           ['INPUT', 'new_input'],
+//           ['OUTPUT', 'new_output'],
+//         ]),
+//         'port_types'
+//       );
+//     this.setPreviousStatement(true, 'Ports');
+//     this.setNextStatement(true, 'Ports');
+//     this.setColour(240);
+//     this.setTooltip('');
+//     this.setHelpUrl('');
+//   },
+// };
+
 Blockly.Blocks['set_block'] = {
   init: function () {
     this.appendDummyInput()
       .appendField('set')
-      .appendField(new Blockly.FieldVariable('PORT_NAME'), 'NAME')
+      .appendField(new Blockly.FieldTextInput('NEW_PORT'), 'PORT')
       .appendField('as')
       .appendField(
         new Blockly.FieldDropdown([
           ['INPUT', 'new_input'],
           ['OUTPUT', 'new_output'],
+          ['WIRE', 'new_wire'],
         ]),
         'port_types'
       );

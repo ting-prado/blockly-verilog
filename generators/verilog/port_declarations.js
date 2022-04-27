@@ -41,10 +41,7 @@ Blockly.Verilog['module_block'] = function (block) {
 Blockly.Verilog['set_block'] = function (block) {
   var dropdown_port_types = block.getFieldValue('port_types');
 
-  var variable_name = Blockly.Verilog.nameDB_.getName(
-    block.getFieldValue('NAME'),
-    Blockly.Variables.NAME_TYPE
-  );
+  var variable_name = block.getFieldValue('PORT');
 
   var modified_name = variable_name.split(/[^a-zA-Z0-9]+/).join('_');
   let modId;
