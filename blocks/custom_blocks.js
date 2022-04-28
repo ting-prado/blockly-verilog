@@ -61,7 +61,7 @@ Blockly.Blocks['assign_block'] = {
     this.appendValueInput('NAME')
       .setCheck(null)
       .appendField('Assign ')
-      .appendField(new Blockly.FieldTextInput('OUTPUT'), 'OUTPUT');
+      .appendField(new Blockly.FieldTextInput('output_var'), 'OUTPUT');
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setColour(255);
@@ -162,7 +162,7 @@ Blockly.Blocks['set_block'] = {
 Blockly.Blocks['input_var'] = {
   init: function () {
     this.appendDummyInput().appendField(
-      new Blockly.FieldTextInput('INPUT'),
+      new Blockly.FieldTextInput('input_var'),
       'INPUT'
     );
     this.setOutput(true, null);
