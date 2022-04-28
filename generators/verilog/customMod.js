@@ -21,7 +21,6 @@ const customMod = (() => {
   const ports = {
     input: [],
     output: [],
-    wire: [],
   };
 
   const getModIndex = (id) => {
@@ -74,7 +73,6 @@ const customMod = (() => {
         modules.splice(modules[i], 1);
       }
     }
-    console.log(modules);
   };
 
   const removeDup = (modIndex, type, index) => {
@@ -147,7 +145,23 @@ const customMod = (() => {
     );
   };
 
-  return { addVariable, checkDeleted, displayPorts, addModule };
+  const getPorts = (id) => {
+    // let arr = [];
+    // if (id !== undefined && modules.length > 0) {
+    //   const index = getModIndex(id);
+    //   const obj = modules[index].ports;
+    //   for (const type in obj) {
+    //     if (obj[type].length > 0) {
+    //       obj[type].forEach((data) => {
+    //         arr.push(data.name);
+    //       });
+    //     }
+    //   }
+    //   return arr;
+    // }
+  };
+
+  return { addVariable, checkDeleted, displayPorts, addModule, getPorts };
 })();
 
 const Module = (name, id) => {
