@@ -58,33 +58,47 @@ Blockly.Blocks['input_0'] = {
 
 Blockly.Blocks['assign_block'] = {
   init: function () {
-    let options = this.giveOptions();
     this.appendValueInput('NAME')
       .setCheck(null)
       .appendField('Assign ')
-      .appendField(new Blockly.FieldDropdown(options), 'VARIABLES');
+      .appendField(new Blockly.FieldTextInput('OUTPUT'), 'OUTPUT');
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setColour(255);
     this.setTooltip('');
     this.setHelpUrl('');
-    console.log(Blockly.FieldDropdown);
-  },
-
-  giveOptions: function () {
-    let id = this.id;
-    return this.generateOptions(id);
-  },
-
-  generateOptions: function (id) {
-    let options = [
-      ['i', 'I'],
-      ['a', 'A'],
-    ];
-    console.log(id);
-    return options;
   },
 };
+
+// Blockly.Blocks['assign_block'] = {
+//   init: function () {
+//     let options = this.giveOptions();
+//     this.appendValueInput('NAME')
+//       .setCheck(null)
+//       .appendField('Assign ')
+//       .appendField(new Blockly.FieldDropdown(options), 'VARIABLES');
+//     this.setPreviousStatement(true, null);
+//     this.setNextStatement(true, null);
+//     this.setColour(255);
+//     this.setTooltip('');
+//     this.setHelpUrl('');
+//     console.log(Blockly.FieldDropdown);
+//   },
+
+//   giveOptions: function () {
+//     let id = this.id;
+//     return this.generateOptions(id);
+//   },
+
+//   generateOptions: function (id) {
+//     let options = [
+//       ['i', 'I'],
+//       ['a', 'A'],
+//     ];
+//     console.log(id);
+//     return options;
+//   },
+// };
 
 Blockly.Blocks['module_block'] = {
   init: function () {
@@ -134,7 +148,6 @@ Blockly.Blocks['set_block'] = {
         new Blockly.FieldDropdown([
           ['INPUT', 'new_input'],
           ['OUTPUT', 'new_output'],
-          ['WIRE', 'new_wire'],
         ]),
         'port_types'
       );
@@ -149,8 +162,8 @@ Blockly.Blocks['set_block'] = {
 Blockly.Blocks['input_var'] = {
   init: function () {
     this.appendDummyInput().appendField(
-      new Blockly.FieldVariable('INPUT'),
-      'input_var'
+      new Blockly.FieldTextInput('INPUT'),
+      'INPUT'
     );
     this.setOutput(true, null);
     this.setColour(105);

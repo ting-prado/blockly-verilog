@@ -15,24 +15,21 @@ goog.provide('Blockly.Verilog.variables');
 goog.require('Blockly.Verilog');
 
 Blockly.Verilog['assign_block'] = function (block) {
-  var dropdown_variables = block.getFieldValue('VARIABLES');
+  var text_output = block.getFieldValue('OUTPUT');
   var value_name = Blockly.Verilog.valueToCode(
     block,
     'NAME',
     Blockly.Verilog.ORDER_ATOMIC
   );
   // TODO: Assemble Verilog into code variable.
-  var code = `assign ${dropdown_variables} = value ${value_name};\n`;
+  var code = `assign ${text_output} = ${value_name};\n`;
   return code;
 };
 
 Blockly.Verilog['input_var'] = function (block) {
-  var variable_input_var = Blockly.Verilog.nameDB_.getName(
-    block.getFieldValue('input_var'),
-    Blockly.Variables.NAME_TYPE
-  );
+  var text_input = block.getFieldValue('INPUT');
   // TODO: Assemble Verilog into code variable.
-  var code = variable_input_var;
+  var code = text_input;
   // TODO: Change ORDER_NONE to the correct strength.
-  return [code, Blockly.Verilog.ORDER_NONE];
+  return [code, Blockly.Verilog.ORDER_ATOMIC];
 };

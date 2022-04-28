@@ -33,7 +33,7 @@ Blockly.Verilog['module_block'] = function (block) {
   const connected = statements_port_list.trim().split(' ');
   let vars = customMod.displayPorts(block.id, connected);
 
-  var code = `modules ${mod_name} ( ${vars} ): \n\n ${statements_module_content}\nend module\n\n`;
+  var code = `module ${mod_name} ( ${vars} ): \n\n ${statements_module_content}\nend module\n\n`;
 
   return code;
 };
@@ -43,6 +43,7 @@ Blockly.Verilog['set_block'] = function (block) {
 
   var variable_name = block.getFieldValue('PORT');
 
+  console.log(typeof variable_name);
   var modified_name = variable_name.split(/[^a-zA-Z0-9]+/).join('_');
   let modId;
 
