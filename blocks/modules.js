@@ -39,7 +39,7 @@ Blockly.Blocks['modules_defnoreturn'] = {
     this.appendDummyInput()
       .appendField(Blockly.Msg['MODULES_DEFNORETURN_TITLE'])
       .appendField(nameField, 'NAME');
-    this.appendDummyInput().appendField('', 'PARAMS');
+    this.appendDummyInput().appendField('Assigned').appendField('', 'PARAMS');
     this.appendDummyInput().appendField('Module content:');
     this.setInputsInline(false);
     this.setMutator(new Blockly.Mutator(['modules_mutatorarg']));
@@ -58,6 +58,7 @@ Blockly.Blocks['modules_defnoreturn'] = {
     this.argumentVarModels_ = [];
     this.setStatements_(true);
     this.statementConnection_ = null;
+    this.appendDummyInput().appendField('end module');
   },
   /**
    * Add or remove the statement block from this function definition.
@@ -96,7 +97,6 @@ Blockly.Blocks['modules_defnoreturn'] = {
     // no need to fire a change event.
     Blockly.Events.disable();
     try {
-      console.log(this);
       this.setFieldValue(paramString, 'PARAMS');
     } finally {
       Blockly.Events.enable();
