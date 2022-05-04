@@ -634,6 +634,7 @@ Blockly.Blocks['modules_callnoreturn'] = {
   init: function () {
     this.appendDummyInput('TOPROW').appendField('', 'NAME');
     this.setOutput(true, null);
+    this.setInputsInline(true);
     this.setStyle('procedure_blocks');
     // Tooltip is set in renameProcedure.
     this.setHelpUrl(Blockly.Msg['MODULES_CALLNORETURN_HELPURL']);
@@ -793,11 +794,18 @@ Blockly.Blocks['modules_callnoreturn'] = {
         }
       } else {
         // Add new input.
-        //field = new Blockly.FieldTextInput(this.arguments_[i], 'VAR');
-        field = new Blockly.FieldLabel(this.arguments_[i]);
-        var input = this.appendValueInput('ARG' + i)
-          .setAlign(Blockly.ALIGN_RIGHT)
-          .appendField(field, 'ARGNAME' + i);
+        field = new Blockly.FieldTextInput(this.arguments_[i]);
+        //field = new Blockly.FieldLabel(this.arguments_[i]);
+        var input = this.appendDummyInput()
+          .appendField(field, 'ARGNAME' + i)
+          .appendField(
+            this.arguments_.length > 1 && i !== this.arguments_.length - 1
+              ? ','
+              : ''
+          );
+        // var input = this.appendValueInput('ARG' + i)
+        //   .setAlign(Blockly.ALIGN_RIGHT)
+        //   .appendField(field, 'ARGNAME' + i);
         input.init();
       }
     }
@@ -811,10 +819,7 @@ Blockly.Blocks['modules_callnoreturn'] = {
     if (topRow) {
       if (this.arguments_.length) {
         if (!this.getField('WITH')) {
-          topRow.appendField(
-            Blockly.Msg['PROCEDURES_CALL_BEFORE_PARAMS'],
-            'WITH'
-          );
+          topRow.appendField(Blockly.Msg['MODULES_CALL_BEFORE_PARAMS'], 'WITH');
           topRow.init();
         }
       } else {

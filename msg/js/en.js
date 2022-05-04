@@ -423,6 +423,7 @@ Blockly.Msg['MODULES_DEFNORETURN_TOOLTIP'] = 'Creates a module.';
 Blockly.Msg['MODULES_MUTATORARG_TITLE'] = 'port name:';
 Blockly.Msg['MODULES_MUTATORARG_TOOLTIP'] = 'Add an port to the module.';
 Blockly.Msg['MODULES_MUTATORCONTAINER_TITLE'] = 'ports';
+Blockly.Msg['MODULES_CALL_BEFORE_PARAMS'] = 'with ports:';
 Blockly.Msg['MODULES_CALLRETURN_HELPURL'] =
   'https://en.wikipedia.org/wiki/Subroutine';
 Blockly.Msg['MODULES_CALLNORETURN_TOOLTIP'] =
