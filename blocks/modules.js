@@ -55,6 +55,7 @@ Blockly.Blocks['modules_defnoreturn'] = {
     this.setTooltip(Blockly.Msg['MODULES_DEFNORETURN_TOOLTIP']);
     this.setHelpUrl(Blockly.Msg['MODULES_DEFNORETURN_HELPURL']);
     this.arguments_ = [];
+    this.types_ = [];
     this.argumentVarModels_ = [];
     this.setStatements_(true);
     this.statementConnection_ = null;
@@ -210,7 +211,7 @@ Blockly.Blocks['modules_defnoreturn'] = {
 
     var containerBlock = Blockly.Xml.domToBlock(containerBlockNode, workspace);
 
-    if (this.type == 'procedures_defreturn') {
+    if (this.type == 'modules_defreturn') {
       containerBlock.setFieldValue(this.hasStatements_, 'STATEMENTS');
     } else {
       containerBlock.removeInput('STATEMENT_INPUT');
@@ -228,7 +229,9 @@ Blockly.Blocks['modules_defnoreturn'] = {
   compose: function (containerBlock) {
     // Parameter list.
     this.arguments_ = [];
+    this.types_ = [];
     this.paramIds_ = [];
+    this.spec_ = [];
     this.argumentVarModels_ = [];
     var paramBlock = containerBlock.getInputTargetBlock('STACK');
     while (paramBlock && !paramBlock.isInsertionMarker()) {
@@ -236,7 +239,9 @@ Blockly.Blocks['modules_defnoreturn'] = {
       this.arguments_.push(varName);
       var variable = this.workspace.getVariable(varName, '');
       this.argumentVarModels_.push(variable);
-
+      var portVal = paramBlock.getFieldValue('WIRE_PORTS');
+      this.types_.push(portVal);
+      this.spec_.push(null);
       this.paramIds_.push(paramBlock.id);
       paramBlock =
         paramBlock.nextConnection && paramBlock.nextConnection.targetBlock();
@@ -530,17 +535,16 @@ Blockly.Blocks['modules_mutatorarg'] = {
       .appendField('as')
       .appendField(
         new Blockly.FieldDropdown([
-          ['INPUT', 'new_input'],
-          ['OUTPUT', 'new_output'],
+          ['INPUT', 'input'],
+          ['OUTPUT', 'output'],
         ]),
-        'port_types'
+        'WIRE_PORTS'
       );
     this.setPreviousStatement(true);
     this.setNextStatement(true);
     this.setStyle('procedure_blocks');
     this.setTooltip(Blockly.Msg['MODULES_MUTATORARG_TOOLTIP']);
     this.contextMenu = false;
-
     // Create the default variable when we drag the block in from the flyout.
     // Have to do this after installing the field on the block.
     field.onFinishEditing_ = this.deleteIntermediateVars_;
@@ -567,7 +571,6 @@ Blockly.Blocks['modules_mutatorarg'] = {
     if (!varName) {
       return null;
     }
-
     // Prevents duplicate parameter names in functions
     var workspace =
       sourceBlock.workspace.targetWorkspace || sourceBlock.workspace;
