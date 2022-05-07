@@ -89,12 +89,11 @@ Blockly.Verilog['procedures_callreturn'] = function (block) {
   var args = [];
   var variables = block.getVars();
   for (var i = 0; i < variables.length; i++) {
-    args[i] =
-      Blockly.Verilog.valueToCode(
-        block,
-        'ARG' + i,
-        Blockly.Verilog.ORDER_NONE
-      ) || 'null';
+    args[i] = Blockly.Verilog.valueToCode(
+      block,
+      'ARG' + i,
+      Blockly.Verilog.ORDER_NONE
+    );
   }
   var code = funcName + '(' + args.join(', ') + ')';
   return [code, Blockly.Verilog.ORDER_FUNCTION_CALL];

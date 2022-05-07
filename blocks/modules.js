@@ -1093,10 +1093,12 @@ Blockly.Blocks['modules_callreturn'] = {
   init: function () {
     this.appendDummyInput('TOPROW').appendField('', 'NAME');
     this.setOutput(true);
+    this.setInputsInline(true);
     this.setStyle('procedure_blocks');
     // Tooltip is set in domToMutation.
     this.setHelpUrl(Blockly.Msg['PROCEDURES_CALLRETURN_HELPURL']);
     this.arguments_ = [];
+    this.types_ = [];
     this.argumentVarModels_ = [];
     this.quarkConnections_ = {};
     this.quarkIds_ = null;

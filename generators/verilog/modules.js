@@ -69,7 +69,6 @@ Blockly.Verilog['modules_defnoreturn'] = function (block) {
       );
     }
   });
-  console.log(input, output);
 
   var code =
     'module ' +
@@ -94,9 +93,18 @@ Blockly.Verilog['modules_defnoreturn'] = function (block) {
 };
 
 Blockly.Verilog['modules_callnoreturn'] = function (block) {
-  // Call a procedure with no return value.
-  // Generated code is for a function call as a statement is the same as a
-  // function call as a value, with the addition of line ending.
-  var tuple = Blockly.Verilog['procedures_callreturn'](block);
-  return tuple[0] + ';\n';
+  // Call a module with no return value.
+  var funcName = Blockly.Verilog.nameDB_.getName(
+    block.getFieldValue('NAME'),
+    Blockly.PROCEDURE_CATEGORY_NAME
+  );
+
+  var args = [];
+  var variables = block.arguments_;
+  for (let i = 0; i < variables.length; i++) {
+    args[i] = block.getFieldValue('ARGNAME' + i);
+  }
+
+  var code = funcName + '(' + args.join(', ') + ')';
+  return [code, Blockly.Verilog.ORDER_FUNCTION_CALL];
 };
