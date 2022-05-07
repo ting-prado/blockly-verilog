@@ -469,12 +469,12 @@ Blockly.Blocks['modules_defnoreturn'] = {
   getParamInfo: function () {
     var paramList = [];
     for (var i = 0; i < this.arguments_.length; i++) {
-      paramList.push([
-        this.types_[i],
-        this.arguments_[i],
-        this.getFieldValue('NAME'),
-        this.getRelativeToSurfaceXY().y,
-      ]);
+      paramList.push({
+        type: this.types_[i],
+        var_name: this.arguments_[i],
+        mod_name: this.getFieldValue('NAME'),
+        y_pos: this.getRelativeToSurfaceXY().y,
+      });
     }
     return paramList;
   },
