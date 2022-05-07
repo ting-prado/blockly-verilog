@@ -167,14 +167,14 @@ Blockly.Constants.Logic.CONTROLS_IF_MUTATOR_MIXIN = {
     // Count number of inputs.
     this.elseifCount_ = 0;
     this.elseCount_ = 0;
-    //var valueConnections = [null];
+    var valueConnections = [];
     var statementConnections = [null];
     var elseStatementConnection = null;
     while (clauseBlock && !clauseBlock.isInsertionMarker()) {
       switch (clauseBlock.type) {
         case 'conditional_block_elseif':
           this.elseifCount_++;
-          //valueConnections.push(clauseBlock.valueConnection_);
+          valueConnections.push(clauseBlock.valueConnection_);
           statementConnections.push(clauseBlock.statementConnection_);
           break;
         case 'conditional_block_else':
@@ -190,7 +190,7 @@ Blockly.Constants.Logic.CONTROLS_IF_MUTATOR_MIXIN = {
     this.updateShape_();
     // Reconnect any child blocks.
     this.reconnectChildBlocks_(
-      //valueConnections,
+      valueConnections,
       statementConnections,
       elseStatementConnection
     );
@@ -206,7 +206,7 @@ Blockly.Constants.Logic.CONTROLS_IF_MUTATOR_MIXIN = {
     while (clauseBlock) {
       switch (clauseBlock.type) {
         case 'conditional_block_elseif':
-          var inputIf = this.getInput('IF' + i);
+          var inputIf = this.getField('STATEMENT' + i);
           var inputDo = this.getInput('DO' + i);
           clauseBlock.valueConnection_ = inputIf;
           clauseBlock.statementConnection_ =
@@ -230,7 +230,7 @@ Blockly.Constants.Logic.CONTROLS_IF_MUTATOR_MIXIN = {
    * @this {Blockly.Block}
    */
   rebuildShape_: function () {
-    //var valueConnections = [null];
+    var valueConnections = [];
     var statementConnections = [null];
     var elseStatementConnection = null;
 
@@ -242,13 +242,13 @@ Blockly.Constants.Logic.CONTROLS_IF_MUTATOR_MIXIN = {
     while (this.getInput('IF' + i)) {
       var inputIf = this.getInput('IF' + i);
       var inputDo = this.getInput('DO' + i);
-      //valueConnections.push(inputIf.connection.targetConnection);
+      valueConnections.push(inputIf);
       statementConnections.push(inputDo.connection.targetConnection);
       i++;
     }
     this.updateShape_();
     this.reconnectChildBlocks_(
-      //valueConnections,
+      valueConnections,
       statementConnections,
       elseStatementConnection
     );
@@ -298,12 +298,16 @@ Blockly.Constants.Logic.CONTROLS_IF_MUTATOR_MIXIN = {
    * @this {Blockly.Block}
    */
   reconnectChildBlocks_: function (
-    //valueConnections,
+    valueConnections,
     statementConnections,
     elseStatementConnection
   ) {
     for (var i = 1; i <= this.elseifCount_; i++) {
-      //Blockly.Mutator.reconnect(valueConnections[i], this, 'IF' + i);
+      if (valueConnections[i - 1] == undefined) {
+        return;
+      } else {
+        this.setFieldValue(valueConnections[i - 1].value_, 'STATEMENT' + i);
+      }
       Blockly.Mutator.reconnect(statementConnections[i], this, 'DO' + i);
     }
     Blockly.Mutator.reconnect(elseStatementConnection, this, 'ELSE');
