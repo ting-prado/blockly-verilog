@@ -38,7 +38,7 @@ Blockly.defineBlocksWithJsonArray([
     args0: [
       {
         type: 'field_input',
-        name: 'STATEMENT',
+        name: 'STATEMENT0',
         text: 'statement',
       },
     ],
