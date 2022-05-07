@@ -50,37 +50,37 @@ Blockly.Verilog['modules_defnoreturn'] = function (block) {
     returnValue = Blockly.Verilog.INDENT + 'return ' + returnValue + ';\n';
   }
 
-  var args = [];
-  var variables = block.getVars();
-  for (var i = 0; i < variables.length; i++) {
-    args[i] = Blockly.Verilog.nameDB_.getName(
-      variables[i],
-      Blockly.VARIABLE_CATEGORY_NAME
-    );
-  }
-  // if (
-  //   block.argumentVarModels_.length > 0 &&
-  //   block.mutator.getWorkspace() !== null
-  // ) {
-  //   let obj = block.mutator.getWorkspace().blockDB_;
-  //   for (const item in obj) {
-  //     if (obj[item].type == 'modules_mutatorarg') {
-  //       let mutblock = obj[item];
-  //       console.log(
-  //         `${mutblock.getFieldValue('NAME')} as ${mutblock.getFieldValue(
-  //           'wire_ports'
-  //         )}`
-  //       );
-  //     }
-  //   }
-  // }
+  let input = [];
+  let output = [];
+  block.getParamInfo().forEach((info) => {
+    if (info.type == 'input') {
+      input.push(
+        Blockly.Verilog.nameDB_.getName(
+          info.var_name,
+          Blockly.VARIABLE_CATEGORY_NAME
+        )
+      );
+    } else {
+      output.push(
+        Blockly.Verilog.nameDB_.getName(
+          info.var_name,
+          Blockly.VARIABLE_CATEGORY_NAME
+        )
+      );
+    }
+  });
+  console.log(input, output);
 
   var code =
     'module ' +
     modName +
     '(' +
-    args.join(', ') +
-    ');\n' +
+    (input.length > 0 ? 'input ' : '') +
+    input.join(', ') +
+    (input.length > 0 && output.length > 0 ? ',\n' : '') +
+    (output.length > 0 ? 'output ' : '') +
+    output.join(', ') +
+    ');\n\n' +
     xfix1 +
     loopTrap +
     branch +
