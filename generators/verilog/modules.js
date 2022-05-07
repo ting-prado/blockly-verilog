@@ -92,3 +92,11 @@ Blockly.Verilog['modules_defnoreturn'] = function (block) {
   Blockly.Verilog.definitions_['%' + modName] = code;
   return null;
 };
+
+Blockly.Verilog['modules_callnoreturn'] = function (block) {
+  // Call a procedure with no return value.
+  // Generated code is for a function call as a statement is the same as a
+  // function call as a value, with the addition of line ending.
+  var tuple = Blockly.Verilog['procedures_callreturn'](block);
+  return tuple[0] + ';\n';
+};
