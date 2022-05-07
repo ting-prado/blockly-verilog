@@ -12,9 +12,11 @@
     <script src="./generators/verilog/values.js"></script>
     <script src="./generators/verilog/variables.js"></script>
     <script src="./generators/verilog/modules.js"></script>
+    <script src="./generators/verilog/conditional.js"></script>
     <script src="./msg/js/en.js"></script>
     <script src="./blocks/custom_blocks.js"></script>
     <script src="./blocks/modules.js"></script>
+    <script src="./blocks/conditional.js"></script>
     <script src="./generators/verilog/customMod.js"></script>
   </head>
   <body>
@@ -37,20 +39,20 @@
       <category name="Modules" colour="#5b67a5">
         <block type="modules_defnoreturn"></block>
       </category>
-      <category name="Conditional" colour="#5b80a5">
-        <block type="controls_if"></block>
+      <category name="Logic Gates" colour="#5b80a5">
+        <block type="logic_blocks"></block>
+        <block type="not_block"></block>
       </category>
       <category name="Variables" colour="#5ba58c">
         <block type="assign_block"></block>
         <block type="input_var"></block>
       </category>
-      <category name="Values" colour="#0cbaa6">
+      <category name="Conditional" colour="#0cbaa6">
+        <block type="conditional_block"></block>
+      </category>
+      <category name="Values" colour="#0cba77">
         <block type="input_1"></block>
         <block type="input_0"></block>
-      </category>
-      <category name="Logic Gates" colour="#0cba77">
-        <block type="logic_blocks"></block>
-        <block type="not_block"></block>
       </category>
     </xml>
     <script src="./main.js"></script>
