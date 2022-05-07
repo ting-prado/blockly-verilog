@@ -99,7 +99,7 @@ Blockly.Blocks['modules_defnoreturn'] = {
       hash['arg_' + this.arguments_[x].toLowerCase()] = true;
     }
     if (badArg) {
-      this.setWarningText(Blockly.Msg.PROCEDURES_DEF_DUPLICATE_WARNING);
+      this.setWarningText(Blockly.Msg.MODULES_DEF_DUPLICATE_WARNING);
     } else {
       this.setWarningText(null);
     }

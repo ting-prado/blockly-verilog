@@ -429,6 +429,8 @@ Blockly.Msg['MODULES_CALLRETURN_HELPURL'] =
 Blockly.Msg['MODULES_CALLNORETURN_TOOLTIP'] =
   "Instantiate the user-defined module '%1'.";
 Blockly.Msg['MODULES_CREATE_DO'] = "Create '%1'";
+Blockly.Msg['MODULES_DEF_DUPLICATE_WARNING'] =
+  'Warning: This module has duplicate parameters.';
 Blockly.Msg['PROCEDURES_DEFNORETURN_TOOLTIP'] =
   'Creates a function with no output.';
 Blockly.Msg['PROCEDURES_DEFRETURN_HELPURL'] =
