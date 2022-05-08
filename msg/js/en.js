@@ -57,7 +57,7 @@ Blockly.Msg['CONTROLS_IF_ELSEIF_TOOLTIP'] = 'Add a condition to the if block.';
 Blockly.Msg['CONTROLS_IF_ELSE_TOOLTIP'] =
   'Add a final, catch-all condition to the if block.';
 Blockly.Msg['CONTROLS_IF_HELPURL'] =
-  'https://github.com/google/blockly/wiki/IfElse';
+  'https://users.wpi.edu/~rjduck/Verilog%20for%20synthesis%20-%20combinational%20rev%20a.pdf';
 Blockly.Msg['CONTROLS_IF_IF_TOOLTIP'] =
   'Add, remove, or reorder sections to reconfigure this if block.';
 Blockly.Msg['CONTROLS_IF_MSG_ELSE'] = 'else';
@@ -71,9 +71,11 @@ Blockly.Msg['CONTROLS_IF_TOOLTIP_3'] =
   'If the first value is true, then do the first block of statements. Otherwise, if the second value is true, do the second block of statements.';
 Blockly.Msg['CONTROLS_IF_TOOLTIP_4'] =
   'If the first value is true, then do the first block of statements. Otherwise, if the second value is true, do the second block of statements. If none of the values are true, do the last block of statements.';
+Blockly.Msg['CONTROLS_IF_TOOLTIP_5'] =
+  'If the condition is true, then assign the first block value. Otherwise, if the condition is false, assign the second block value.';
 Blockly.Msg['CONTROLS_REPEAT_HELPURL'] =
   'https://en.wikipedia.org/wiki/For_loop';
-Blockly.Msg['CONTROLS_REPEAT_INPUT_DO'] = 'do';
+Blockly.Msg['CONTROLS_REPEAT_INPUT_DO'] = 'then';
 Blockly.Msg['CONTROLS_REPEAT_TITLE'] = 'repeat %1 times';
 Blockly.Msg['CONTROLS_REPEAT_TOOLTIP'] = 'Do some statements several times.';
 Blockly.Msg['CONTROLS_WHILEUNTIL_HELPURL'] =
