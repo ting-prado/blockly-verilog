@@ -52,9 +52,17 @@ Blockly.Verilog['modules_defnoreturn'] = function (block) {
 
   let input = [];
   let output = [];
+  let wire = [];
   block.getParamInfo().forEach((info) => {
     if (info.type == 'input') {
       input.push(
+        Blockly.Verilog.nameDB_.getName(
+          info.var_name,
+          Blockly.VARIABLE_CATEGORY_NAME
+        )
+      );
+    } else if (info.type == 'wire') {
+      wire.push(
         Blockly.Verilog.nameDB_.getName(
           info.var_name,
           Blockly.VARIABLE_CATEGORY_NAME
@@ -74,14 +82,22 @@ Blockly.Verilog['modules_defnoreturn'] = function (block) {
     'module ' +
     modName +
     '(' +
-    (input.length > 0 ? 'input ' : '') +
     input.join(', ') +
-    (input.length > 0 && output.length > 0 ? ',\n' : '') +
-    (output.length > 0 ? 'output ' : '') +
+    (output.length > 0 && input.length > 0 ? ', ' : '') +
     output.join(', ') +
     ');\n\n' +
     xfix1 +
     loopTrap +
+    (input.length > 0 ? 'input ' : '') +
+    input.join(', ') +
+    (input.length > 0 ? ';\n' : '') +
+    (output.length > 0 ? 'output ' : '') +
+    output.join(', ') +
+    (output.length > 0 ? ';\n' : '') +
+    (wire.length > 0 ? 'wire ' : '') +
+    wire.join(', ') +
+    (wire.length > 0 ? ';\n' : '') +
+    '\n' +
     branch +
     xfix2 +
     returnValue +
@@ -99,12 +115,20 @@ Blockly.Verilog['modules_callnoreturn'] = function (block) {
     Blockly.PROCEDURE_CATEGORY_NAME
   );
 
+  var instance = block.getFieldValue('INSTANCE');
+
   var args = [];
-  var variables = block.arguments_;
+  let variables = Blockly.Procedures.getDefinition(
+    this.getProcedureCall(),
+    this.workspace
+  ).getParamInfo();
+
   for (let i = 0; i < variables.length; i++) {
-    args[i] = block.getFieldValue('ARGNAME' + i);
+    if (variables[i].type != 'wire') {
+      args[i] = block.getFieldValue('ARGNAME' + i);
+    }
   }
 
-  var code = funcName + '(' + args.join(', ') + ')';
+  var code = funcName + ' ' + instance + '(' + args.join(', ') + ')';
   return [code, Blockly.Verilog.ORDER_FUNCTION_CALL];
 };

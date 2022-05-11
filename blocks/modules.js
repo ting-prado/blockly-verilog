@@ -104,10 +104,17 @@ Blockly.Blocks['modules_defnoreturn'] = {
       this.setWarningText(null);
     }
     // Merge the arguments into a human-readable list.
+    let ports = [];
+    for (let i = 0; i < this.arguments_.length; i++) {
+      if (this.types_[i] != 'wire') {
+        ports.push(this.arguments_[i]);
+      }
+    }
+
     var paramString = '';
     if (this.arguments_.length) {
       paramString =
-        Blockly.Msg['MODULES_BEFORE_PARAMS'] + ' ' + this.arguments_.join(', ');
+        Blockly.Msg['MODULES_BEFORE_PARAMS'] + ' ' + ports.join(', ');
     }
     // The params field is deterministic based on the mutation,
     // no need to fire a change event.
@@ -162,8 +169,6 @@ Blockly.Blocks['modules_defnoreturn'] = {
         var varType = childNode.getAttribute('types');
         var varId =
           childNode.getAttribute('varid') || childNode.getAttribute('varId');
-        this.arguments_.push(varName);
-        this.types_.push(varType);
         var variable = Blockly.Variables.getOrCreateVariablePackage(
           this.workspace,
           varId,
@@ -597,6 +602,7 @@ Blockly.Blocks['modules_mutatorarg'] = {
         new Blockly.FieldDropdown([
           ['INPUT', 'input'],
           ['OUTPUT', 'output'],
+          ['WIRE', 'wire'],
         ]),
         'WIRE_PORTS'
       );
@@ -698,7 +704,10 @@ Blockly.Blocks['modules_callnoreturn'] = {
    * @this {Blockly.Block}
    */
   init: function () {
-    this.appendDummyInput('TOPROW').appendField('', 'NAME');
+    this.appendDummyInput('TOPROW')
+      .appendField('', 'NAME')
+      .appendField('with instance name: ')
+      .appendField(new Blockly.FieldTextInput('unasigned'), 'INSTANCE');
     this.setOutput(true, null);
     this.setInputsInline(true);
     this.setStyle('procedure_blocks');
@@ -760,6 +769,10 @@ Blockly.Blocks['modules_callnoreturn'] = {
       this.getProcedureCall(),
       this.workspace
     );
+    let paramList = defBlock.getParamInfo();
+    for (let i = 0; i < paramList.length; i++) {
+      paramTypes[i] = paramList[i].type;
+    }
     var mutatorOpen =
       defBlock && defBlock.mutator && defBlock.mutator.isVisible();
     if (!mutatorOpen) {
@@ -791,7 +804,7 @@ Blockly.Blocks['modules_callnoreturn'] = {
     this.rendered = false;
     // Update the quarkConnections_ with existing connections.
     for (var i = 0; i < this.arguments_.length; i++) {
-      var input = this.getInput('ARG' + i);
+      var input = this.getInput('ARGNAME' + i);
       if (input) {
         var connection = input.connection.targetConnection;
         this.quarkConnections_[this.quarkIds_[i]] = connection;
@@ -816,7 +829,7 @@ Blockly.Blocks['modules_callnoreturn'] = {
         this.workspace,
         null,
         this.arguments_[i],
-        ''
+        this.types_[i]
       );
       this.argumentVarModels_.push(variable);
     }
@@ -829,7 +842,7 @@ Blockly.Blocks['modules_callnoreturn'] = {
         var quarkId = this.quarkIds_[i];
         if (quarkId in this.quarkConnections_) {
           var connection = this.quarkConnections_[quarkId];
-          if (!Blockly.Mutator.reconnect(connection, this, 'ARG' + i)) {
+          if (!Blockly.Mutator.reconnect(connection, this, 'ARGNAME' + i)) {
             // Block no longer exists or has been attached elsewhere.
             delete this.quarkConnections_[quarkId];
           }
@@ -848,7 +861,13 @@ Blockly.Blocks['modules_callnoreturn'] = {
    * @this {Blockly.Block}
    */
   updateShape_: function () {
-    for (var i = 0; i < this.arguments_.length; i++) {
+    let inoutarr = [];
+    this.argumentVarModels_.forEach((data) => {
+      if ((data.type == 'input') | (data.type == 'output')) {
+        inoutarr.push(data);
+      }
+    });
+    for (var i = 0; i < inoutarr.length; i++) {
       var field = this.getField('ARGNAME' + i);
       if (field) {
         // Ensure argument name is up to date.
@@ -856,20 +875,18 @@ Blockly.Blocks['modules_callnoreturn'] = {
         // no need to fire a change event.
         Blockly.Events.disable();
         try {
-          field.setValue(this.arguments_[i]);
+          field.setValue(inoutarr[i].name);
         } finally {
           Blockly.Events.enable();
         }
       } else {
         // Add new input.
-        field = new Blockly.FieldTextInput(this.arguments_[i]);
+        field = new Blockly.FieldTextInput(inoutarr[i].name);
         //field = new Blockly.FieldLabel(this.arguments_[i]);
         var input = this.appendDummyInput()
           .appendField(field, 'ARGNAME' + i)
           .appendField(
-            this.arguments_.length > 1 && i !== this.arguments_.length - 1
-              ? ','
-              : ''
+            inoutarr.length > 1 && i !== inoutarr.length - 1 ? ',' : ''
           );
         // var input = this.appendValueInput('ARG' + i)
         //   .setAlign(Blockly.ALIGN_RIGHT)
@@ -878,8 +895,8 @@ Blockly.Blocks['modules_callnoreturn'] = {
       }
     }
     // Remove deleted inputs.
-    while (this.getInput('ARG' + i)) {
-      this.removeInput('ARG' + i);
+    while (this.getInput('ARGNAME' + i)) {
+      this.removeInput('ARGNAME' + i);
       i++;
     }
     // Add 'with:' if there are parameters, remove otherwise.
