@@ -42,6 +42,17 @@ const showCode = () => {
   codeOutput.textContent = code;
 };
 
-demoWorkspace.addChangeListener(customMod.checkDeleted);
-
 demoWorkspace.addChangeListener(showCode);
+
+const cpyBtn = document.querySelector('.copy');
+
+function copyCode() {
+  var r = document.createRange();
+  r.selectNode(document.getElementById('codeOutput'));
+  window.getSelection().removeAllRanges();
+  window.getSelection().addRange(r);
+  document.execCommand('copy');
+  window.getSelection().removeAllRanges();
+}
+
+cpyBtn.addEventListener('click', copyCode);

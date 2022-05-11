@@ -37,7 +37,7 @@
 #codeOutput {
   border: 1px solid gray;
   margin: 0.5rem;
-  height: 92.5%;
+  height: 88%;
   font-size: 0.9rem;
   white-space: pre-line;
 }
@@ -46,4 +46,20 @@
   border: 1px solid gray;
   margin: 0.5rem;
   height: 79%;
+}
+
+.copy {
+  border: 1px solid gray;
+  margin: 0 auto;
+  display: block;
+  cursor: pointer;
+  width: 94%;
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: bold;
+  color: rgb(44, 44, 44);
+}
+
+.copy:active {
+  color: white;
+  background-color: gray;
 }
