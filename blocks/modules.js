@@ -708,7 +708,8 @@ Blockly.Blocks['modules_callnoreturn'] = {
       .appendField('', 'NAME')
       .appendField('with instance name: ')
       .appendField(new Blockly.FieldTextInput('unasigned'), 'INSTANCE');
-    this.setOutput(true, null);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
     this.setInputsInline(true);
     this.setStyle('procedure_blocks');
     // Tooltip is set in renameProcedure.
@@ -1109,7 +1110,8 @@ Blockly.Blocks['modules_callreturn'] = {
    */
   init: function () {
     this.appendDummyInput('TOPROW').appendField('', 'NAME');
-    this.setOutput(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
     this.setInputsInline(true);
     this.setStyle('procedure_blocks');
     // Tooltip is set in domToMutation.
