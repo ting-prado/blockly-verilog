@@ -34,7 +34,7 @@
 }
 
 .time {
-  margin: 0 10px;
+  gap: 3px;
   display: flex;
   align-items: center;
 }

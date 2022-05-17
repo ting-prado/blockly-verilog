@@ -87,9 +87,20 @@
     "typescript": "^4.3.2",
     "typescript-closure-tools": "^0.0.7",
     "webdriverio": "^7.0.3",
+    "webpack": "^5.72.1",
+    "webpack-cli": "^4.9.2",
+    "webpack-dev-server": "^4.9.0",
     "yargs": "^16.0.3"
   },
   "dependencies": {
-    "jsdom": "15.2.1"
+    "copy-webpack-plugin": "^10.2.4",
+    "express": "^4.18.1",
+    "jquery": "^3.6.0",
+    "js-sha256": "^0.9.0",
+    "jsdom": "15.2.1",
+    "sql-template-strings": "^2.2.2",
+    "sqlite": "^4.1.1",
+    "sqlite3": "^5.0.8",
+    "yosys2digitaljs": "^0.6.0"
   }
 }
