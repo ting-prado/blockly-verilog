@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@100;200&display=swap');
+
 #blocklyDiv {
   box-sizing: border-box;
   border: 3px solid #ddd;
@@ -14,6 +16,41 @@
   border-bottom: 6px solid #ddd;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   user-select: none;
+}
+
+.top-nav {
+  background: #cbcbcb;
+  padding: 4px 0.5rem;
+  border-bottom: 3px solid #ddd;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btn-grp {
+  display: flex;
+  gap: 5px;
+}
+
+#diagram .label-text {
+  padding-top: 0;
+  border: none;
+}
+
+.simulate-btn {
+  margin: 0 5px;
+}
+
+.time {
+  margin: 0 10px;
+  display: flex;
+  align-items: center;
+}
+
+.btn-sml {
+  padding: 0 5px;
+  border: none;
+  background: #cbcbcb;
 }
 
 #diagram {
@@ -43,23 +80,46 @@
 }
 
 #diagramOutput {
+  box-sizing: border-box;
   border: 1px solid gray;
   margin: 0.5rem;
-  height: 79%;
+  height: 77%;
 }
 
 .copy {
   border: 1px solid gray;
   margin: 0 auto;
   display: block;
-  cursor: pointer;
   width: 94%;
-  font-family: 'Courier New', Courier, monospace;
-  font-weight: bold;
-  color: rgb(44, 44, 44);
 }
 
-.copy:active {
-  color: white;
-  background-color: gray;
+.copy:hover,
+.simulate-btn:hover {
+  background: rgba(218, 165, 32, 0.8);
+}
+
+.copy:active,
+.simulate-btn:active {
+  background: goldenrod;
+}
+
+.copy,
+.simulate-btn {
+  background: goldenrod;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-family: 'Roboto Mono', monospace;
+  font-weight: bold;
+  font-size: 12px;
+  padding: 3px 10px;
+}
+
+.time-logo {
+  user-select: none;
+}
+
+.digitaljs-logo {
+  width: 24px;
+  height: 24px;
 }

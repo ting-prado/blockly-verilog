@@ -23,7 +23,46 @@
     <div id="blocklyDiv"></div>
     <div class="outputs">
       <div id="diagram">
-        <div class="label-text">Logic Diagram</div>
+        <div class="top-nav">
+          <span class="label-text">Logic Diagram</span>
+          <div class="btn-grp">
+            <img
+              class="digitaljs-logo"
+              src="./media/digitaljs.png"
+              alt="digitaljs logo"
+            />
+            <button
+              name="pause"
+              type="button"
+              class="btn btn-sml"
+              title="Pause simulation"
+              disabled="true"
+            >
+              ⏸️
+            </button>
+            <button
+              name="resume"
+              type="button"
+              class="btn btn-sml"
+              title="Resume simulation"
+              disabled="true"
+            >
+              ▶
+            </button>
+            <span class="time">
+              <span class="time-logo" title="Current tick">⏱</span>
+              <input
+                type="text"
+                class="form-control"
+                disabled="disabled"
+                id="tick"
+              />
+            </span>
+            <button type="submit" class="btn simulate-btn">
+              Display circuit
+            </button>
+          </div>
+        </div>
         <div id="diagramOutput"></div>
       </div>
       <div id="code">
