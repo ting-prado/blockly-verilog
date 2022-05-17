@@ -4,7 +4,7 @@
   box-sizing: border-box;
   border: 3px solid #ddd;
   width: 75%;
-  height: 65vh;
+  height: 90vh;
 }
 
 .label-text {
@@ -22,19 +22,11 @@
   background: #cbcbcb;
   padding: 4px 0.5rem;
   border-bottom: 3px solid #ddd;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
 }
 
 .btn-grp {
   display: flex;
   gap: 5px;
-}
-
-#diagram .label-text {
-  padding-top: 0;
-  border: none;
 }
 
 .simulate-btn {
@@ -56,19 +48,20 @@
 #diagram {
   box-sizing: border-box;
   border: 3px solid #ddd;
-  width: 75%;
-  height: 35vh;
+  width: 100%;
+  height: 50vh;
 }
 
 #code {
   font-family: 'Courier New', Courier, monospace;
   box-sizing: border-box;
   border: 3px solid #ddd;
-  height: 100vh;
+  height: 90vh;
   width: 25%;
   position: absolute;
-  bottom: 0;
+  top: 0;
   right: 0;
+  padding-bottom: 0.5rem;
 }
 
 #codeOutput {
@@ -77,13 +70,14 @@
   height: 88%;
   font-size: 0.9rem;
   white-space: pre-line;
+  overflow: auto;
 }
 
 #diagramOutput {
   box-sizing: border-box;
   border: 1px solid gray;
   margin: 0.5rem;
-  height: 77%;
+  height: 84%;
 }
 
 .copy {
@@ -95,17 +89,17 @@
 
 .copy:hover,
 .simulate-btn:hover {
-  background: rgba(218, 165, 32, 0.8);
+  background: rgb(252, 224, 68);
 }
 
 .copy:active,
 .simulate-btn:active {
-  background: goldenrod;
+  background: gold;
 }
 
 .copy,
 .simulate-btn {
-  background: goldenrod;
+  background: gold;
   border: none;
   border-radius: 3px;
   cursor: pointer;
