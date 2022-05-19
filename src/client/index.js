@@ -92,6 +92,7 @@ function runquery() {
       errorp.textContent = '';
     },
     error: (request, status, error) => {
+      $('.top-nav').find('button[type=submit]').prop('disabled', false);
       loading = false;
       running = false;
       updateBtns();
