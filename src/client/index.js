@@ -55,9 +55,11 @@ function mkcircuit(data, opts) {
   circuit.start();
   paper = circuit.displayOn($('<div>').appendTo($('#diagramOutput')));
   circuit.on('userChange', () => {
+    running = !running;
     updateBtns();
   });
   circuit.on('changeRunning', () => {
+    running = !running;
     updateBtns();
   });
   running = true;
