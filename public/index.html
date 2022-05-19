@@ -35,7 +35,6 @@
               type="button"
               class="btn btn-sml"
               title="Pause simulation"
-              disabled="true"
             >
               ⏸️
             </button>
@@ -44,7 +43,6 @@
               type="button"
               class="btn btn-sml"
               title="Resume simulation"
-              disabled="true"
             >
               ▶
             </button>
@@ -62,7 +60,9 @@
             </button>
           </div>
         </div>
-        <div id="diagramOutput"></div>
+        <div id="diagramOutput">
+          <span class="error"></span>
+        </div>
       </div>
       <div id="code">
         <div class="label-text">Verilog Code</div>

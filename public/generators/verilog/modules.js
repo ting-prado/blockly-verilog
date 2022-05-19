@@ -129,6 +129,6 @@ Blockly.Verilog['modules_callnoreturn'] = function (block) {
     }
   }
 
-  var code = funcName + ' ' + instance + '(' + args.join(', ') + ')\n';
+  var code = funcName + ' ' + instance + '(' + args.join(', ') + ');\n';
   return code;
 };

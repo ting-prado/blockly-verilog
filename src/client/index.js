@@ -4,9 +4,7 @@ import 'bootstrap';
 import $ from 'jquery';
 import * as digitaljs from 'digitaljs';
 
-let cnt = 0;
-let editors = {};
-
+let running = false;
 let loading = false,
   circuit,
   paper;
@@ -16,8 +14,20 @@ function myUpdateFunction() {
     '_input.sv': '',
   };
   let code = document.getElementById('codeOutput').textContent;
+  console.log(code);
   svFile['_input.sv'] = code;
   return svFile;
+}
+
+function updateBtns() {
+  if (circuit == undefined) {
+    $('.top-nav').find('button:not(.simulate-btn)').prop('disabled', true);
+    $('.top-nav').find('button[name=pause]').prop('disabled', !running);
+    $('.top-nav').find('button[name=resume]').prop('disabled', !running);
+  } else {
+    $('.top-nav').find('button[name=pause]').prop('disabled', !running);
+    $('.top-nav').find('button[name=resume]').prop('disabled', running);
+  }
 }
 
 function destroyCkt() {
@@ -30,29 +40,9 @@ function destroyCkt() {
     paper.remove();
     paper = undefined;
   }
-}
-
-function mk_markers(paper) {
-  let markers = [];
-  paper.on('cell:mouseover', (cellView) => {
-    for (const marker of markers) marker.clear();
-    markers = [];
-    const positions = cellView.model.get('source_positions');
-    if (!positions) return;
-    for (const pos of positions) {
-      const editor = editors[find_filename(pos.name)];
-      if (!editor || editor._is_dirty) continue;
-      const marker = editor.markText(
-        { line: pos.from.line - 1, ch: pos.from.column - 1 },
-        { line: pos.to.line - 1, ch: pos.to.column - 1 },
-        { css: 'background-color: yellow' }
-      );
-      markers.push(marker);
-    }
-  });
-  paper.on('cell:mouseout', (cellView) => {
-    for (const marker of markers) marker.clear();
-  });
+  loading = true;
+  running = false;
+  updateBtns();
 }
 
 function mkcircuit(data, opts) {
@@ -64,22 +54,20 @@ function mkcircuit(data, opts) {
   });
   circuit.start();
   paper = circuit.displayOn($('<div>').appendTo($('#diagramOutput')));
-  mk_markers(paper);
-  circuit.on('new:paper', (paper) => {
-    mk_markers(paper);
-  });
   circuit.on('userChange', () => {
     updateBtns();
   });
   circuit.on('changeRunning', () => {
     updateBtns();
   });
+  running = true;
   updateBtns();
 }
 
 function runquery() {
   const data = myUpdateFunction();
   const opts = { optimize: false, fsm: false, fsmexpand: false };
+  const errorp = document.querySelector('.error');
   destroyCkt();
   $.ajax({
     type: 'POST',
@@ -89,33 +77,62 @@ function runquery() {
     dataType: 'json',
     success: (responseData) => {
       let circuit = responseData.output;
-      mkcircuit(circuit);
+      const engines = {
+        synch: digitaljs.engines.BrowserSynchEngine,
+        worker: digitaljs.engines.WorkerEngine,
+      };
+      circuit = digitaljs.transform.transformCircuit(circuit);
+      mkcircuit(circuit, {
+        layoutEngine: 'elkjs',
+        engine: engines['worker'],
+      });
+      running = true;
+      errorp.textContent = '';
     },
     error: (request, status, error) => {
       loading = false;
+      running = false;
       updateBtns();
-      $('.top-nav').find('button[type=submit]').prop('disabled', false);
-      $(
-        '<div class="query-alert alert alert-danger alert-dismissible fade show" role="alert"></div>'
-      )
-        .append(
-          '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>'
-        )
-        .append(document.createTextNode(request.responseJSON.error))
-        .append($('<pre>').text(request.responseJSON.yosys_stderr.trim()))
-        .prependTo($('#synthesize-bar'))
-        .alert();
+      errorp.textContent =
+        'Cannot simulate circuit, please check your program.';
+      console.log(error);
     },
   });
 }
 
 const submitBtn = document.querySelector('.simulate-btn');
-submitBtn.addEventListener('click', runquery);
+submitBtn.addEventListener('click', (e) => {
+  e.preventDefault();
+  $('.top-nav').find('button, input').prop('disabled', true);
+  runquery();
+});
 
-$('button[name=pause]').click((e) => {
+document.querySelector('button[name=pause]').addEventListener('click', (e) => {
   circuit.stop();
 });
 
-$('button[name=resume]').click((e) => {
+document.querySelector('button[name=resume]').addEventListener('click', (e) => {
   circuit.start();
 });
+
+window.onpopstate = () => {
+  const hash = window.location.hash.slice(1);
+  if (loading || !hash) return;
+  destroycircuit();
+  $.ajax({
+    type: 'GET',
+    url: '/api/circuit/' + hash,
+    dataType: 'json',
+    success: (responseData, status, xhr) => {
+      mkcircuit(responseData);
+    },
+    error: (request, status, error) => {
+      loading = false;
+      updatebuttons();
+    },
+  });
+};
+
+updateBtns();
+
+if (window.location.hash.slice(1)) window.onpopstate();
