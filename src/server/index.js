@@ -6,6 +6,7 @@ const sqlite = require('sqlite');
 const sqlite3 = require('sqlite3');
 const SQL = require('sql-template-strings');
 const sha256 = require('js-sha256');
+const path = require('path');
 
 Promise.resolve(
   (async () => {
