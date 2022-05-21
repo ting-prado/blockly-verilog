@@ -89,6 +89,7 @@ function runquery() {
       });
       running = true;
       errorp.textContent = '';
+      errorp.setAttribute('style', 'padding: 0');
     },
     error: (request, status, error) => {
       $('.top-nav').find('button[type=submit]').prop('disabled', false);
@@ -97,6 +98,7 @@ function runquery() {
       updateBtns();
       errorp.textContent =
         'Cannot simulate circuit, please check your program.';
+      errorp.setAttribute('style', 'padding: 2px');
       console.log(error);
     },
   });
