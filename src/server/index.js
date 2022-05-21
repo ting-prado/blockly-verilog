@@ -71,6 +71,7 @@ Promise.resolve(
           .json({ error: 'Store failed', messages: String(ret) });
       }
     });
+    app.use(express.static(_dirname + '/dist'));
     app.listen(8080, 'localhost');
   })()
 );
