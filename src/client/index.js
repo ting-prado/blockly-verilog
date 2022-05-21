@@ -121,24 +121,4 @@ document.querySelector('button[name=resume]').addEventListener('click', (e) => {
   updateBtns();
 });
 
-window.onpopstate = () => {
-  const hash = window.location.hash.slice(1);
-  if (loading || !hash) return;
-  destroycircuit();
-  $.ajax({
-    type: 'GET',
-    url: '/api/circuit/' + hash,
-    dataType: 'json',
-    success: (responseData, status, xhr) => {
-      mkcircuit(responseData);
-    },
-    error: (request, status, error) => {
-      loading = false;
-      updatebuttons();
-    },
-  });
-};
-
 updateBtns();
-
-if (window.location.hash.slice(1)) window.onpopstate();
