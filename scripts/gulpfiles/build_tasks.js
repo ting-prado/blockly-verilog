@@ -361,29 +361,19 @@ function buildDart() {
 }
 
 /**
- * This task builds the dart generator:
- *     verilog_compressed.js
- */
-function buildVerilog() {
-  return buildGenerator('verilog', 'Verilog');
-}
-
-/**
  * This tasks builds all the generators:
  *     javascript_compressed.js
  *     python_compressed.js
  *     php_compressed.js
  *     lua_compressed.js
  *     dart_compressed.js
- *     verilog_compressed.js
  */
 const buildGenerators = gulp.parallel(
   buildJavascript,
   buildPython,
   buildPHP,
   buildLua,
-  buildDart,
-  buildVerilog
+  buildDart
 );
 
 /**
