@@ -1,14 +1,13 @@
 {
-  "name": "blockly-verilog",
-  "version": "1.0",
-  "description": "Blockly-verilog is an application made from Blockly.",
+  "name": "blockly",
+  "version": "6.20210701.0",
+  "description": "Blockly is a library for building visual programming editors.",
   "keywords": [
-    "blockly",
-    "heroku"
+    "blockly"
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/ting-prado/blockly-verilog"
+    "url": "https://github.com/google/blockly.git"
   },
   "bugs": {
     "url": "https://github.com/google/blockly/issues"
