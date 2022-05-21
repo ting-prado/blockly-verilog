@@ -17,7 +17,7 @@
     "name": "Neil Fraser"
   },
   "scripts": {
-    "build": "gulp build",
+    "build": "webpack --mode production",
     "build:blocks": "gulp buildBlocks",
     "build:compressed": "gulp buildCompressed",
     "build:core": "gulp buildCore",
@@ -46,8 +46,7 @@
     "test:compile:advanced": "gulp buildAdvancedCompilationTest",
     "typings": "gulp typings",
     "updateGithubPages": "gulp gitUpdateGithubPages",
-    "buildwp": "webpack --mode production",
-    "watchwp": "webpack --watch",
+    "watch": "webpack --watch",
     "start": "node src/server/index.js",
     "server": "nodemon src/server/index.js",
     "client": "webpack serve --mode development --devtool inline-source-map --hot",
