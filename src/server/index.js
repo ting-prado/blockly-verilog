@@ -6,6 +6,7 @@ const sqlite = require('sqlite');
 const sqlite3 = require('sqlite3');
 const SQL = require('sql-template-strings');
 const sha256 = require('js-sha256');
+var path = require('path');
 
 Promise.resolve(
   (async () => {
@@ -71,7 +72,11 @@ Promise.resolve(
           .json({ error: 'Store failed', messages: String(ret) });
       }
     });
-    app.use(express.static(__dirname + '/dist'));
-    app.listen(8080, 'localhost');
+    app.use(express.static(path.join(__dirname, 'dist')));
+    app.set('port', process.env.PORT || 8080);
+
+    var server = app.listen(app.get('port'), function () {
+      console.log('listening on port ', server.address().port);
+    });
   })()
 );
