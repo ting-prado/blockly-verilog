@@ -1,6 +1,5 @@
 'use strict';
 
-import 'bootstrap';
 import $ from 'jquery';
 import * as digitaljs from 'digitaljs';
 
