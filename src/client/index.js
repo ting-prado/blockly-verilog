@@ -14,7 +14,6 @@ function myUpdateFunction() {
     '_input.sv': '',
   };
   let code = document.getElementById('codeOutput').textContent;
-  console.log(code);
   svFile['_input.sv'] = code;
   return svFile;
 }
@@ -55,7 +54,6 @@ function mkcircuit(data, opts) {
   circuit.start();
   paper = circuit.displayOn($('<div>').appendTo($('#diagramOutput')));
   circuit.on('userChange', () => {
-    running = true;
     updateBtns();
   });
   circuit.on('changeRunning', () => {
@@ -113,10 +111,14 @@ submitBtn.addEventListener('click', (e) => {
 
 document.querySelector('button[name=pause]').addEventListener('click', (e) => {
   circuit.stop();
+  running = false;
+  updateBtns();
 });
 
 document.querySelector('button[name=resume]').addEventListener('click', (e) => {
   circuit.start();
+  running = true;
+  updateBtns();
 });
 
 window.onpopstate = () => {
