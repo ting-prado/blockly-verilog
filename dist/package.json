@@ -26,10 +26,6 @@
     "./blockly-node.js": "./blockly.js"
   },
   "license": "Apache-2.0",
-  "engines": {
-    "node": "^14.17.3",
-    "npm": "^8.3.0"
-  },
   "devDependencies": {
     "@blockly/block-test": "^1.0.0",
     "@blockly/dev-tools": "^2.0.1",
