@@ -53,7 +53,7 @@
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "postinstall": "heroku config:set NPM_CONFIG_PRODUCTION=false"
   },
-  "main": "./index.js",
+  "main": "src/server/index.js",
   "umd": "./blockly.min.js",
   "unpkg": "./blockly.min.js",
   "types": "./index.d.ts",
@@ -63,6 +63,10 @@
     "./blockly-node.js": "./blockly.js"
   },
   "license": "Apache-2.0",
+  "engines": {
+    "npm": "8.3.0",
+    "node": "14.17.3"
+  },
   "devDependencies": {
     "@blockly/block-test": "^1.0.0",
     "@blockly/dev-tools": "^2.0.1",
