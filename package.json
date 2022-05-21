@@ -50,8 +50,7 @@
     "start": "node src/server/index.js",
     "server": "nodemon src/server/index.js",
     "client": "webpack serve --mode development --devtool inline-source-map --hot",
-    "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "postinstall": "heroku config:set NPM_CONFIG_PRODUCTION=false"
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "main": "src/server/index.js",
   "umd": "./blockly.min.js",
