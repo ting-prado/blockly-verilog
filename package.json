@@ -93,7 +93,6 @@
     "rimraf": "^3.0.2",
     "selenium-standalone": "^7.1.0",
     "through2": "^4.0.2",
-    "typescript-closure-tools": "^0.0.7",
     "webdriverio": "^7.0.3",
     "webpack": "^5.72.1",
     "webpack-cli": "^4.9.2",
