@@ -43,7 +43,9 @@ module.exports = (env, argv) => {
       port: 3000,
       open: true,
       proxy: {
-        '/api': 'http://localhost:8080',
+        '/api': devMode
+          ? 'http://localhost:8080'
+          : 'https://blockly-verilog.herokuapp.com',
       },
     },
     plugins: [
