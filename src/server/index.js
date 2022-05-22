@@ -18,7 +18,7 @@ Promise.resolve(
 
     app.use(bodyParser.json({ limit: '50mb' }));
 
-    app.post('/api/yosys2digitaljs', async (req, res) => {
+    app.post('../../api/yosys2digitaljs', async (req, res) => {
       try {
         const data = await yosys2digitaljs.process_files(
           req.body.files,
