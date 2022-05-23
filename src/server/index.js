@@ -1,12 +1,12 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
+const path = require('path');
 const yosys2digitaljs = require('yosys2digitaljs');
 const sqlite = require('sqlite');
 const sqlite3 = require('sqlite3');
 const SQL = require('sql-template-strings');
 const sha256 = require('js-sha256');
-const path = require('path');
 
 Promise.resolve(
   (async () => {
@@ -18,7 +18,7 @@ Promise.resolve(
 
     app.use(bodyParser.json({ limit: '50mb' }));
 
-    app.post('../../api/yosys2digitaljs', async (req, res) => {
+    app.post('/api/yosys2digitaljs', async (req, res) => {
       try {
         const data = await yosys2digitaljs.process_files(
           req.body.files,
@@ -72,7 +72,7 @@ Promise.resolve(
           .json({ error: 'Store failed', messages: String(ret) });
       }
     });
-    app.use(express.static(path.join(__dirname, '../../dist')));
+    app.use(express.static(path.join(__dirname, '../../public')));
     app.set('port', process.env.PORT || 8080);
 
     var server = app.listen(app.get('port'), function () {
