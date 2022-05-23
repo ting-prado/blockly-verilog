@@ -23,7 +23,10 @@ Blockly.Verilog['not_block'] = function (block) {
   // TODO: Assemble Verilog into code variable.
   var code = `~${value_name}`;
   // TODO: Change ORDER_NONE to the correct strength.
-  return [code, Blockly.Verilog.ORDER_NONE];
+  console.log(value_name);
+  if (block.getSurroundParent() !== null && value_name !== '') {
+    return [code, Blockly.Verilog.ORDER_ATOMIC];
+  } else return ['', Blockly.Verilog.ORDER_ATOMIC];
 };
 
 Blockly.Verilog['logic_blocks'] = function (block) {
@@ -62,5 +65,7 @@ Blockly.Verilog['logic_blocks'] = function (block) {
       break;
   }
   // TODO: Change ORDER_NONE to the correct strength.
-  return [code, Blockly.Verilog.ORDER_NONE];
+  if (block.getSurroundParent() !== null) {
+    return [code, Blockly.Verilog.ORDER_NONE];
+  } else return ['', Blockly.Verilog.ORDER_NONE];
 };
