@@ -130,5 +130,12 @@ Blockly.Verilog['modules_callnoreturn'] = function (block) {
   }
 
   var code = funcName + ' ' + instance + '(' + args.join(', ') + ');\n';
-  return code;
+  if (
+    block.getSurroundParent() !== null &&
+    block.getSurroundParent().type == 'modules_defnoreturn' &&
+    block.getSurroundParent().getFieldValue('NAME') !==
+      block.getFieldValue('NAME')
+  ) {
+    return code;
+  } else return '';
 };

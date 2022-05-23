@@ -23,7 +23,12 @@ Blockly.Verilog['assign_block'] = function (block) {
   );
   // TODO: Assemble Verilog into code variable.
   var code = `assign ${text_output} = ${value_name};\n`;
-  return code;
+  if (
+    block.getSurroundParent() !== null &&
+    block.getSurroundParent().type == 'modules_defnoreturn'
+  ) {
+    return code;
+  } else return '';
 };
 
 Blockly.Verilog['input_var'] = function (block) {
@@ -31,5 +36,7 @@ Blockly.Verilog['input_var'] = function (block) {
   // TODO: Assemble Verilog into code variable.
   var code = text_input;
   // TODO: Change ORDER_NONE to the correct strength.
-  return [code, Blockly.Verilog.ORDER_ATOMIC];
+  if (block.getSurroundParent() !== null) {
+    return [code, Blockly.Verilog.ORDER_ATOMIC];
+  } else return ['', Blockly.Verilog.ORDER_ATOMIC];
 };

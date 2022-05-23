@@ -29,5 +29,7 @@ Blockly.Verilog['conditional_block'] = function (block) {
   // TODO: Assemble Verilog into code variable.
   var code = `(${text_condition}) ? ${value_then} : ${value_else}`;
   // TODO: Change ORDER_NONE to the correct strength.
-  return [code, Blockly.Verilog.ORDER_NONE];
+  if (block.getSurroundParent() !== null) {
+    return [code, Blockly.Verilog.ORDER_NONE];
+  } else return ['', Blockly.Verilog.ORDER_NONE];
 };
