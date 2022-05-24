@@ -17,6 +17,7 @@ Promise.resolve(
     await db.migrate(); // ({ force: 'last' });
 
     app.use(bodyParser.json({ limit: '50mb' }));
+    app.use(express.static(path.join(__dirname, '../../dist')));
 
     app.post('/api/yosys2digitaljs', async (req, res) => {
       try {
@@ -72,7 +73,6 @@ Promise.resolve(
           .json({ error: 'Store failed', messages: String(ret) });
       }
     });
-    app.use(express.static(path.join(__dirname, '../../dist')));
     app.set('port', process.env.PORT || 8080);
 
     var server = app.listen(app.get('port'), function () {
