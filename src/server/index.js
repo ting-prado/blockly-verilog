@@ -72,7 +72,7 @@ Promise.resolve(
           .json({ error: 'Store failed', messages: String(ret) });
       }
     });
-    app.use(express.static(path.join(__dirname, '../../public')));
+    app.use(express.static(path.join(__dirname, '../../dist')));
     app.set('port', process.env.PORT || 8080);
 
     var server = app.listen(app.get('port'), function () {
