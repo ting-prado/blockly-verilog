@@ -1,15 +1,4 @@
-/* eslint-disable */
-;(function(root, factory) {
-  if (typeof define === 'function' && define.amd) { // AMD
-    define(['../core'], factory);
-  } else if (typeof exports === 'object') { // Node.js
-    module.exports = factory(require('../core'));
-  } else { // Browser
-    root.Blockly.Msg = factory(root.Blockly);
-  }
-}(this, function(Blockly) {
-
-      var Blockly = {};Blockly.Msg={};// This file was automatically generated.  Do not modify.
+// This file was automatically generated.  Do not modify.
 
 'use strict';
 
@@ -433,7 +422,7 @@ Blockly.Msg['MODULES_DEFNORETURN_COMMENT'] = 'Describe this module...';
 Blockly.Msg['MODULES_DEFNORETURN_MODULE'] = 'design_name';
 Blockly.Msg['MODULES_DEFNORETURN_TITLE'] = 'Module: ';
 Blockly.Msg['MODULES_DEFNORETURN_TOOLTIP'] = 'Creates a module.';
-Blockly.Msg['MODULES_MUTATORARG_TITLE'] = 'port name:';
+Blockly.Msg['MODULES_MUTATORARG_TITLE'] = 'variable name:';
 Blockly.Msg['MODULES_MUTATORARG_TOOLTIP'] = 'Add a port to the module.';
 Blockly.Msg['MODULES_MUTATORCONTAINER_TITLE'] = 'ports';
 Blockly.Msg['MODULES_CALL_BEFORE_PARAMS'] = 'with ports:';
@@ -635,6 +624,3 @@ Blockly.Msg['TEXTS_HUE'] = '160';
 Blockly.Msg['PROCEDURES_HUE'] = '290';
 Blockly.Msg['COLOUR_HUE'] = '20';
 Blockly.Msg['VARIABLES_DYNAMIC_HUE'] = '310';
-
-return Blockly.Msg;
-})); 
