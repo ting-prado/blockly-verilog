@@ -1,3 +1,21 @@
+/**
+ * @license
+ * Copyright 2012 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/**
+ * @fileoverview Procedure blocks for Blockly.
+ * @author fraser@google.com (Neil Fraser)
+ */
+'use strict';
+
+goog.provide('Blockly.Blocks.custom_blocks');
+
+goog.require('Blockly');
+goog.require('Blockly.Blocks');
+goog.require('Blockly.Warning');
+
 Blockly.Blocks['logic_blocks'] = {
   init: function () {
     this.appendValueInput('input_1')
@@ -67,6 +85,33 @@ Blockly.Blocks['assign_block'] = {
     this.setColour(255);
     this.setTooltip('');
     this.setHelpUrl('');
+    this.setOnChange(function (changeEvent) {
+      if (
+        this.getRootBlock().type == 'modules_defnoreturn' &&
+        this.getInput('NAME').connection.targetBlock()
+      ) {
+        let modBlock = this.getRootBlock();
+        let params = modBlock.getVars();
+        let value = this.getFieldValue('OUTPUT');
+        let instantiated = false;
+
+        params.forEach((param) => {
+          if (param == value) {
+            instantiated = true;
+          }
+        });
+
+        if (instantiated) {
+          this.setWarningText(null);
+        } else {
+          this.setWarningText('This variable is not defined in this module');
+        }
+      } else if (this.getRootBlock().type != 'modules_defnoreturn') {
+        this.setWarningText('This block should be inside a module block');
+      } else {
+        this.setWarningText('This block should have an input.');
+      }
+    });
   },
 };
 
