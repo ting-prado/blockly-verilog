@@ -70,7 +70,7 @@ function runquery() {
   destroyCkt();
   $.ajax({
     type: 'POST',
-    url: '/api/yosys2digitaljs',
+    url: 'blockly-verilog.herokuapp.com/api/yosys2digitaljs',
     contentType: 'application/json',
     data: JSON.stringify({ files: data, options: opts }),
     dataType: 'json',
