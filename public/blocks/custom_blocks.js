@@ -109,7 +109,7 @@ Blockly.Blocks['assign_block'] = {
       } else if (this.getRootBlock().type != 'modules_defnoreturn') {
         this.setWarningText('This block should be inside a module block');
       } else {
-        this.setWarningText('This block should have an input.');
+        this.setWarningText('This block should have an input');
       }
     });
   },
@@ -125,5 +125,61 @@ Blockly.Blocks['input_var'] = {
     this.setColour(105);
     this.setTooltip('');
     this.setHelpUrl('');
+    this.setOnChange(function (changeEvent) {
+      if (this.getParent() == null) {
+        this.setWarningText('This block should be connected to a setter block');
+      } else {
+        let parentBlock = this.getParent();
+        if (parentBlock.type !== 'assign_block') {
+          let curBlock = parentBlock;
+          while (curBlock.getParent() !== null) {
+            curBlock = curBlock.getParent();
+          }
+          if (curBlock.type == 'modules_defnoreturn') {
+            let params = curBlock.getVars();
+            let value = this.getFieldValue('INPUT');
+            let instantiated = false;
+
+            params.forEach((param) => {
+              if (param == value) {
+                instantiated = true;
+              }
+            });
+            if (instantiated) {
+              this.setWarningText(null);
+            } else {
+              this.setWarningText(
+                'This variable is not defined in this module'
+              );
+            }
+          } else {
+            this.setWarningText(null);
+          }
+        } else {
+          if (parentBlock.getParent() !== null) {
+            let modBlock = parentBlock.getRootBlock();
+            let params = modBlock.getVars();
+            let value = this.getFieldValue('INPUT');
+            let instantiated = false;
+
+            params.forEach((param) => {
+              if (param == value) {
+                instantiated = true;
+              }
+            });
+
+            if (instantiated) {
+              this.setWarningText(null);
+            } else {
+              this.setWarningText(
+                'This variable is not defined in this module'
+              );
+            }
+          } else {
+            this.setWarningText(null);
+          }
+        }
+      }
+    });
   },
 };
