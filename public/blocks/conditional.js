@@ -59,5 +59,17 @@ Blockly.defineBlocksWithJsonArray([
     style: 'logic_blocks',
     tooltip: '%{BKY_CONTROLS_IF_TOOLTIP_5}',
     helpUrl: '%{BKY_CONTROLS_IF_HELPURL}',
+    extensions: ['warning_on_change'],
   },
+
+  Blockly.Extensions.register('warning_on_change', function () {
+    // Example validation upon block change:
+    this.setOnChange(function (changeEvent) {
+      if (this.getParent()) {
+        this.setWarningText(null);
+      } else {
+        this.setWarningText('This block should be connected to a setter block');
+      }
+    });
+  }),
 ]);
