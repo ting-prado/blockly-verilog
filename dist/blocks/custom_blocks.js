@@ -1,3 +1,21 @@
+/**
+ * @license
+ * Copyright 2012 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/**
+ * @fileoverview Procedure blocks for Blockly.
+ * @author fraser@google.com (Neil Fraser)
+ */
+'use strict';
+
+goog.provide('Blockly.Blocks.custom_blocks');
+
+goog.require('Blockly');
+goog.require('Blockly.Blocks');
+goog.require('Blockly.Warning');
+
 Blockly.Blocks['logic_blocks'] = {
   init: function () {
     this.appendValueInput('input_1')
@@ -24,6 +42,13 @@ Blockly.Blocks['logic_blocks'] = {
     this.setColour(230);
     this.setTooltip('');
     this.setHelpUrl('');
+    this.setOnChange(function (changeEvent) {
+      if (this.getParent()) {
+        this.setWarningText(null);
+      } else {
+        this.setWarningText('This block should be connected to a setter block');
+      }
+    });
   },
 };
 
@@ -34,6 +59,19 @@ Blockly.Blocks['not_block'] = {
     this.setColour(170);
     this.setTooltip('');
     this.setHelpUrl('');
+    this.setOnChange(function (changeEvent) {
+      if (this.getParent() && this.getInput('NAME').connection.targetBlock()) {
+        this.setWarningText(null);
+      } else {
+        if (!this.getParent()) {
+          this.setWarningText(
+            'This block should be connected to a setter block'
+          );
+        } else {
+          this.setWarningText('This block should have an input');
+        }
+      }
+    });
   },
 };
 
@@ -44,6 +82,13 @@ Blockly.Blocks['input_1'] = {
     this.setColour(230);
     this.setTooltip('');
     this.setHelpUrl('');
+    this.setOnChange(function (changeEvent) {
+      if (this.getParent()) {
+        this.setWarningText(null);
+      } else {
+        this.setWarningText('This block should be connected to a setter block');
+      }
+    });
   },
 };
 Blockly.Blocks['input_0'] = {
@@ -53,6 +98,13 @@ Blockly.Blocks['input_0'] = {
     this.setColour(230);
     this.setTooltip('');
     this.setHelpUrl('');
+    this.setOnChange(function (changeEvent) {
+      if (this.getParent()) {
+        this.setWarningText(null);
+      } else {
+        this.setWarningText('This block should be connected to a setter block');
+      }
+    });
   },
 };
 
@@ -67,6 +119,33 @@ Blockly.Blocks['assign_block'] = {
     this.setColour(255);
     this.setTooltip('');
     this.setHelpUrl('');
+    this.setOnChange(function (changeEvent) {
+      if (
+        this.getRootBlock().type == 'modules_defnoreturn' &&
+        this.getInput('NAME').connection.targetBlock()
+      ) {
+        let modBlock = this.getRootBlock();
+        let params = modBlock.getVars();
+        let value = this.getFieldValue('OUTPUT');
+        let instantiated = false;
+
+        params.forEach((param) => {
+          if (param == value) {
+            instantiated = true;
+          }
+        });
+
+        if (instantiated) {
+          this.setWarningText(null);
+        } else {
+          this.setWarningText('This variable is not defined in this module');
+        }
+      } else if (this.getRootBlock().type != 'modules_defnoreturn') {
+        this.setWarningText('This block should be inside a module block');
+      } else {
+        this.setWarningText('This block should have an input');
+      }
+    });
   },
 };
 
@@ -80,5 +159,61 @@ Blockly.Blocks['input_var'] = {
     this.setColour(105);
     this.setTooltip('');
     this.setHelpUrl('');
+    this.setOnChange(function (changeEvent) {
+      if (this.getParent() == null) {
+        this.setWarningText('This block should be connected to a setter block');
+      } else {
+        let parentBlock = this.getParent();
+        if (parentBlock.type !== 'assign_block') {
+          let curBlock = parentBlock;
+          while (curBlock.getParent() !== null) {
+            curBlock = curBlock.getParent();
+          }
+          if (curBlock.type == 'modules_defnoreturn') {
+            let params = curBlock.getVars();
+            let value = this.getFieldValue('INPUT');
+            let instantiated = false;
+
+            params.forEach((param) => {
+              if (param == value) {
+                instantiated = true;
+              }
+            });
+            if (instantiated) {
+              this.setWarningText(null);
+            } else {
+              this.setWarningText(
+                'This variable is not defined in this module'
+              );
+            }
+          } else {
+            this.setWarningText(null);
+          }
+        } else {
+          if (parentBlock.getParent() !== null) {
+            let modBlock = parentBlock.getRootBlock();
+            let params = modBlock.getVars();
+            let value = this.getFieldValue('INPUT');
+            let instantiated = false;
+
+            params.forEach((param) => {
+              if (param == value) {
+                instantiated = true;
+              }
+            });
+
+            if (instantiated) {
+              this.setWarningText(null);
+            } else {
+              this.setWarningText(
+                'This variable is not defined in this module'
+              );
+            }
+          } else {
+            this.setWarningText(null);
+          }
+        }
+      }
+    });
   },
 };
