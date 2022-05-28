@@ -42,6 +42,13 @@ Blockly.Blocks['logic_blocks'] = {
     this.setColour(230);
     this.setTooltip('');
     this.setHelpUrl('');
+    this.setOnChange(function (changeEvent) {
+      if (this.getParent()) {
+        this.setWarningText(null);
+      } else {
+        this.setWarningText('This block should be connected to a setter block');
+      }
+    });
   },
 };
 
@@ -52,6 +59,19 @@ Blockly.Blocks['not_block'] = {
     this.setColour(170);
     this.setTooltip('');
     this.setHelpUrl('');
+    this.setOnChange(function (changeEvent) {
+      if (this.getParent() && this.getInput('NAME').connection.targetBlock()) {
+        this.setWarningText(null);
+      } else {
+        if (!this.getParent()) {
+          this.setWarningText(
+            'This block should be connected to a setter block'
+          );
+        } else {
+          this.setWarningText('This block should have an input');
+        }
+      }
+    });
   },
 };
 
@@ -62,6 +82,13 @@ Blockly.Blocks['input_1'] = {
     this.setColour(230);
     this.setTooltip('');
     this.setHelpUrl('');
+    this.setOnChange(function (changeEvent) {
+      if (this.getParent()) {
+        this.setWarningText(null);
+      } else {
+        this.setWarningText('This block should be connected to a setter block');
+      }
+    });
   },
 };
 Blockly.Blocks['input_0'] = {
@@ -71,6 +98,13 @@ Blockly.Blocks['input_0'] = {
     this.setColour(230);
     this.setTooltip('');
     this.setHelpUrl('');
+    this.setOnChange(function (changeEvent) {
+      if (this.getParent()) {
+        this.setWarningText(null);
+      } else {
+        this.setWarningText('This block should be connected to a setter block');
+      }
+    });
   },
 };
 
