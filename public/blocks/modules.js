@@ -720,6 +720,19 @@ Blockly.Blocks['modules_callnoreturn'] = {
     this.quarkConnections_ = {};
     this.quarkIds_ = null;
     this.previousEnabledState_ = true;
+    this.setOnChange(function (changeEvent) {
+      if (this.getParent()) {
+        if (
+          this.getParent().getFieldValue('NAME') == this.getFieldValue('NAME')
+        ) {
+          this.setWarningText('Connect this block to a different module');
+        } else {
+          this.setWarningText(null);
+        }
+      } else {
+        this.setWarningText('This block should be connected to a module block');
+      }
+    });
   },
 
   /**
@@ -805,20 +818,20 @@ Blockly.Blocks['modules_callnoreturn'] = {
     this.rendered = false;
     // Update the quarkConnections_ with existing connections.
     for (var i = 0; i < this.arguments_.length; i++) {
-      var input = this.getInput('ARGNAME' + i);
-      if (input) {
-        var connection = input.connection.targetConnection;
-        this.quarkConnections_[this.quarkIds_[i]] = connection;
-        if (
-          mutatorOpen &&
-          connection &&
-          paramIds.indexOf(this.quarkIds_[i]) == -1
-        ) {
-          // This connection should no longer be attached to this block.
-          connection.disconnect();
-          connection.getSourceBlock().bumpNeighbours();
-        }
-      }
+      var input = this.getInput('ARG' + i);
+      // if (input) {
+      //   var connection = input.connection.targetConnection;
+      //   this.quarkConnections_[this.quarkIds_[i]] = connection;
+      //   if (
+      //     mutatorOpen &&
+      //     connection &&
+      //     paramIds.indexOf(this.quarkIds_[i]) == -1
+      //   ) {
+      //     // This connection should no longer be attached to this block.
+      //     connection.disconnect();
+      //     connection.getSourceBlock().bumpNeighbours();
+      //   }
+      // }
     }
     // Rebuild the block's arguments.
     this.arguments_ = [].concat(paramNames);
@@ -843,14 +856,14 @@ Blockly.Blocks['modules_callnoreturn'] = {
         var quarkId = this.quarkIds_[i];
         if (quarkId in this.quarkConnections_) {
           var connection = this.quarkConnections_[quarkId];
-          if (!Blockly.Mutator.reconnect(connection, this, 'ARGNAME' + i)) {
+          if (!Blockly.Mutator.reconnect(connection, this, 'ARG' + i)) {
             // Block no longer exists or has been attached elsewhere.
             delete this.quarkConnections_[quarkId];
           }
         }
       }
     }
-    // Restore rendering and show the changes.
+    //Restore rendering and show the changes.
     this.rendered = savedRendered;
     if (this.rendered) {
       this.render();
@@ -862,12 +875,7 @@ Blockly.Blocks['modules_callnoreturn'] = {
    * @this {Blockly.Block}
    */
   updateShape_: function () {
-    let inoutarr = [];
-    this.argumentVarModels_.forEach((data) => {
-      if ((data.type == 'input') | (data.type == 'output')) {
-        inoutarr.push(data);
-      }
-    });
+    let inoutarr = this.getInOut();
     for (var i = 0; i < inoutarr.length; i++) {
       var field = this.getField('ARGNAME' + i);
       if (field) {
@@ -882,12 +890,13 @@ Blockly.Blocks['modules_callnoreturn'] = {
         }
       } else {
         // Add new input.
-        field = new Blockly.FieldTextInput(inoutarr[i].name);
+        field = new Blockly.FieldLabel(inoutarr[i].name + ':');
         //field = new Blockly.FieldLabel(this.arguments_[i]);
-        var input = this.appendDummyInput()
+        var input = this.appendDummyInput('ARG' + i)
           .appendField(field, 'ARGNAME' + i)
           .appendField(
-            inoutarr.length > 1 && i !== inoutarr.length - 1 ? ',' : ''
+            new Blockly.FieldDropdown(this.generateOptions),
+            'ARGD' + i
           );
         // var input = this.appendValueInput('ARG' + i)
         //   .setAlign(Blockly.ALIGN_RIGHT)
@@ -896,8 +905,8 @@ Blockly.Blocks['modules_callnoreturn'] = {
       }
     }
     // Remove deleted inputs.
-    while (this.getInput('ARGNAME' + i)) {
-      this.removeInput('ARGNAME' + i);
+    while (this.getInput('ARG' + i)) {
+      this.removeInput('ARG' + i);
       i++;
     }
     // Add 'with:' if there are parameters, remove otherwise.
@@ -958,6 +967,15 @@ Blockly.Blocks['modules_callnoreturn'] = {
    */
   getVars: function () {
     return this.arguments_;
+  },
+  getInOut: function () {
+    let inoutarr = [];
+    this.argumentVarModels_.forEach((data) => {
+      if ((data.type == 'input') | (data.type == 'output')) {
+        inoutarr.push(data);
+      }
+    });
+    return inoutarr;
   },
   /**
    * Return all variables referenced by this block.
@@ -1075,6 +1093,20 @@ Blockly.Blocks['modules_callnoreturn'] = {
       }
     }
   },
+  generateOptions: function () {
+    let options = [['-----', 'INITIAL']];
+    let block = this.getSourceBlock();
+    if (block) {
+      if (block.getParent()) {
+        let params = block.getParent().getVars();
+        for (let i = 0; i < params.length; i++) {
+          options.push([params[i], params[i]]);
+        }
+      }
+    }
+    return options;
+  },
+
   /**
    * Add menu option to find the definition block for this call.
    * @param {!Array} options List of menu options to add to.
