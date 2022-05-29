@@ -49,7 +49,7 @@
   box-sizing: border-box;
   border: 3px solid #ddd;
   width: 100%;
-  height: 40vh;
+  padding: 0.5rem;
 }
 
 #code {
@@ -76,10 +76,10 @@
 #diagramOutput {
   box-sizing: border-box;
   border: 1px solid gray;
-  margin: 0.5rem;
-  height: 80%;
   position: relative;
-  overflow: auto;
+  min-height: 30vh;
+  margin-top: 0.5rem;
+  overflow-x: auto;
 }
 
 .copy {
@@ -126,7 +126,7 @@
   width: 100%;
   position: absolute;
   background: rgb(255, 155, 155);
-  top: 0;
+  bottom: 0;
   font-size: 20px;
   font-family: 'Roboto Mono', monospace;
 }
