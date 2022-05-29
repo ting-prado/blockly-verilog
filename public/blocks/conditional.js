@@ -65,10 +65,16 @@ Blockly.defineBlocksWithJsonArray([
   Blockly.Extensions.register('warning_on_change', function () {
     // Example validation upon block change:
     this.setOnChange(function (changeEvent) {
-      if (this.getParent()) {
+      if (
+        this.getParent() &&
+        this.getInput('THEN').connection.targetBlock() &&
+        this.getInput('ELSE').connection.targetBlock()
+      ) {
         this.setWarningText(null);
-      } else {
+      } else if (!this.getParent()) {
         this.setWarningText('This block should be connected to a setter block');
+      } else {
+        this.setWarningText('This block should have two inputs');
       }
     });
   }),
