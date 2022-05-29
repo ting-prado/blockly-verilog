@@ -113,6 +113,7 @@
     "jsdom": "15.2.1",
     "mini-css-extract-plugin": "^2.6.0",
     "nodemon": "^2.0.16",
+    "serverless-http": "^3.0.1",
     "sql-template-strings": "^2.2.2",
     "sqlite": "^4.1.1",
     "sqlite3": "^5.0.8",
