@@ -17,7 +17,8 @@
     "name": "Neil Fraser"
   },
   "scripts": {
-    "build": "webpack --mode production",
+    "buildwp": "webpack --mode production",
+    "build": "./node_modules/.bin/netlify-lambda build src/server",
     "build:blocks": "gulp buildBlocks",
     "build:compressed": "gulp buildCompressed",
     "build:core": "gulp buildCore",
@@ -47,7 +48,8 @@
     "typings": "gulp typings",
     "updateGithubPages": "gulp gitUpdateGithubPages",
     "watch": "webpack --watch",
-    "start": "node src/server/index.js",
+    "startnode": "node src/server/index.js",
+    "start": "./node_modules/.bin/netlify-lambda serve src/server",
     "server": "nodemon src/server/index.js",
     "client": "webpack serve --mode development --devtool inline-source-map --hot",
     "dev": "concurrently \"npm run server\" \"npm run client\""
@@ -112,6 +114,7 @@
     "js-sha256": "^0.9.0",
     "jsdom": "15.2.1",
     "mini-css-extract-plugin": "^2.6.0",
+    "netlify-lambda": "^2.0.15",
     "nodemon": "^2.0.16",
     "serverless-http": "^3.0.1",
     "sql-template-strings": "^2.2.2",

@@ -7,6 +7,8 @@ const sqlite = require('sqlite');
 const sqlite3 = require('sqlite3');
 const SQL = require('sql-template-strings');
 const sha256 = require('js-sha256');
+const serverless = require('serverless-http');
+const router = express.Router();
 
 Promise.resolve(
   (async () => {
@@ -17,7 +19,6 @@ Promise.resolve(
     await db.migrate(); // ({ force: 'last' });
 
     app.use(bodyParser.json({ limit: '50mb' }));
-    app.use(express.static(path.join(__dirname, '../../dist')));
 
     app.post('/api/yosys2digitaljs', async (req, res) => {
       try {
@@ -73,10 +74,10 @@ Promise.resolve(
           .json({ error: 'Store failed', messages: String(ret) });
       }
     });
-    app.set('port', process.env.PORT || 8080);
-
-    var server = app.listen(app.get('port'), function () {
-      console.log('listening on port ', server.address().port);
-    });
+    app.use(express.static(path.join(__dirname, '../../dist')));
+    app.use('/.netlify/functions/api', router);
   })()
 );
+
+module.exports = app;
+module.exports.handler = serverless(app);
