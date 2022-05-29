@@ -128,6 +128,7 @@ Blockly.Blocks['assign_block'] = {
     this.setTooltip('');
     this.setHelpUrl('');
     this.setOnChange(function (changeEvent) {
+      this.getField('OUTPUT').markDirty();
       if (
         this.getRootBlock().type == 'modules_defnoreturn' &&
         this.getInput('NAME').connection.targetBlock()
@@ -161,9 +162,15 @@ Blockly.Blocks['assign_block'] = {
     let block = this.getSourceBlock();
     if (block) {
       if (block.getParent()) {
-        let params = block.getParent().getVars();
-        for (let i = 0; i < params.length; i++) {
-          options.push([params[i], params[i]]);
+        let curBlock = block.getParent();
+        while (curBlock.getParent() !== null) {
+          curBlock = curBlock.getParent();
+        }
+        if (curBlock.type == 'modules_defnoreturn') {
+          let params = curBlock.getVars();
+          for (let i = 0; i < params.length; i++) {
+            options.push([params[i], params[i]]);
+          }
         }
       }
     }
