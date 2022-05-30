@@ -721,9 +721,10 @@ Blockly.Blocks['modules_callnoreturn'] = {
     this.quarkIds_ = null;
     this.previousEnabledState_ = true;
     this.setOnChange(function (changeEvent) {
-      if (this.getParent()) {
+      if (this.getRootBlock()) {
         if (
-          this.getParent().getFieldValue('NAME') == this.getFieldValue('NAME')
+          this.getRootBlock().getFieldValue('NAME') ==
+          this.getFieldValue('NAME')
         ) {
           this.setWarningText('Connect this block to a different module');
         } else {
