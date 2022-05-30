@@ -121,13 +121,14 @@ Blockly.Blocks['assign_block'] = {
     this.appendValueInput('NAME')
       .setCheck(null)
       .appendField('Assign ')
-      .appendField(new Blockly.FieldTextInput('output_var'), 'OUTPUT');
+      .appendField(new Blockly.FieldDropdown(this.generateOptions), 'OUTPUT');
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setColour(255);
     this.setTooltip('');
     this.setHelpUrl('');
     this.setOnChange(function (changeEvent) {
+      this.getField('OUTPUT').markDirty();
       if (
         this.getRootBlock().type == 'modules_defnoreturn' &&
         this.getInput('NAME').connection.targetBlock()
@@ -143,7 +144,7 @@ Blockly.Blocks['assign_block'] = {
           }
         });
 
-        if (instantiated) {
+        if (instantiated || value == 'INITIAL') {
           this.setWarningText(null);
         } else {
           this.setWarningText('This variable is not defined in this module');
@@ -155,19 +156,39 @@ Blockly.Blocks['assign_block'] = {
       }
     });
   },
+
+  generateOptions: function () {
+    let options = [['--------', 'INITIAL']];
+    let block = this.getSourceBlock();
+    if (block) {
+      if (block.getParent()) {
+        let curBlock = block.getParent();
+        while (curBlock.getParent() !== null) {
+          curBlock = curBlock.getParent();
+        }
+        if (curBlock.type == 'modules_defnoreturn') {
+          let params = curBlock.getVars();
+          for (let i = 0; i < params.length; i++) {
+            options.push([params[i], params[i]]);
+          }
+        }
+      }
+    }
+    return options;
+  },
 };
 
 Blockly.Blocks['input_var'] = {
   init: function () {
-    this.appendDummyInput().appendField(
-      new Blockly.FieldTextInput('input_var'),
-      'INPUT'
-    );
+    this.appendDummyInput()
+      .appendField(new Blockly.FieldDropdown(this.generateOptions), 'INPUT')
+      .setAlign(Blockly.ALIGN_RIGHT);
     this.setOutput(true, null);
     this.setColour(105);
     this.setTooltip('');
     this.setHelpUrl('');
     this.setOnChange(function (changeEvent) {
+      this.getField('INPUT').markDirty();
       if (this.getParent() == null) {
         this.setWarningText('This block should be connected to a setter block');
       } else {
@@ -187,7 +208,7 @@ Blockly.Blocks['input_var'] = {
                 instantiated = true;
               }
             });
-            if (instantiated) {
+            if (instantiated || value == 'INITIAL') {
               this.setWarningText(null);
             } else {
               this.setWarningText(
@@ -209,8 +230,7 @@ Blockly.Blocks['input_var'] = {
                 instantiated = true;
               }
             });
-
-            if (instantiated) {
+            if (instantiated || value == 'INITIAL') {
               this.setWarningText(null);
             } else {
               this.setWarningText(
@@ -223,5 +243,25 @@ Blockly.Blocks['input_var'] = {
         }
       }
     });
+  },
+
+  generateOptions: function () {
+    let options = [['--------', 'INITIAL']];
+    let block = this.getSourceBlock();
+    if (block) {
+      if (block.getParent()) {
+        let curBlock = block.getParent();
+        while (curBlock.getParent() !== null) {
+          curBlock = curBlock.getParent();
+        }
+        if (curBlock.type == 'modules_defnoreturn') {
+          let params = curBlock.getVars();
+          for (let i = 0; i < params.length; i++) {
+            options.push([params[i], params[i]]);
+          }
+        }
+      }
+    }
+    return options;
   },
 };

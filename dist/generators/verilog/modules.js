@@ -118,14 +118,10 @@ Blockly.Verilog['modules_callnoreturn'] = function (block) {
   var instance = block.getFieldValue('INSTANCE');
 
   var args = [];
-  let variables = Blockly.Procedures.getDefinition(
-    this.getProcedureCall(),
-    this.workspace
-  ).getParamInfo();
 
-  for (let i = 0; i < variables.length; i++) {
-    if (variables[i].type != 'wire') {
-      args[i] = block.getFieldValue('ARGNAME' + i);
+  for (let i = 0; i < block.getInOut().length; i++) {
+    if (block.getFieldValue('ARGD' + i) != 'INITIAL') {
+      args[i] = block.getFieldValue('ARGD' + i);
     }
   }
 
