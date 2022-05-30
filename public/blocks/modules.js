@@ -721,6 +721,7 @@ Blockly.Blocks['modules_callnoreturn'] = {
     this.quarkIds_ = null;
     this.previousEnabledState_ = true;
     this.setOnChange(function (changeEvent) {
+      console.log(this);
       if (this.getRootBlock()) {
         if (
           this.getRootBlock().getFieldValue('NAME') ==

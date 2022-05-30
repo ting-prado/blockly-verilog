@@ -721,9 +721,11 @@ Blockly.Blocks['modules_callnoreturn'] = {
     this.quarkIds_ = null;
     this.previousEnabledState_ = true;
     this.setOnChange(function (changeEvent) {
-      if (this.getParent()) {
+      console.log(this);
+      if (this.getRootBlock()) {
         if (
-          this.getParent().getFieldValue('NAME') == this.getFieldValue('NAME')
+          this.getRootBlock().getFieldValue('NAME') ==
+          this.getFieldValue('NAME')
         ) {
           this.setWarningText('Connect this block to a different module');
         } else {
@@ -1098,9 +1100,15 @@ Blockly.Blocks['modules_callnoreturn'] = {
     let block = this.getSourceBlock();
     if (block) {
       if (block.getParent()) {
-        let params = block.getParent().getVars();
-        for (let i = 0; i < params.length; i++) {
-          options.push([params[i], params[i]]);
+        let curBlock = block.getParent();
+        while (curBlock.getParent() !== null) {
+          curBlock = curBlock.getParent();
+        }
+        if (curBlock.type == 'modules_defnoreturn') {
+          let params = curBlock.getVars();
+          for (let i = 0; i < params.length; i++) {
+            options.push([params[i], params[i]]);
+          }
         }
       }
     }
