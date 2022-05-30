@@ -1099,9 +1099,15 @@ Blockly.Blocks['modules_callnoreturn'] = {
     let block = this.getSourceBlock();
     if (block) {
       if (block.getParent()) {
-        let params = block.getParent().getVars();
-        for (let i = 0; i < params.length; i++) {
-          options.push([params[i], params[i]]);
+        let curBlock = block.getParent();
+        while (curBlock.getParent() !== null) {
+          curBlock = curBlock.getParent();
+        }
+        if (curBlock.type == 'modules_defnoreturn') {
+          let params = curBlock.getVars();
+          for (let i = 0; i < params.length; i++) {
+            options.push([params[i], params[i]]);
+          }
         }
       }
     }
