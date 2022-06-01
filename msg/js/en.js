@@ -422,9 +422,9 @@ Blockly.Msg['MODULES_DEFNORETURN_COMMENT'] = 'Describe this module...';
 Blockly.Msg['MODULES_DEFNORETURN_MODULE'] = 'design_name';
 Blockly.Msg['MODULES_DEFNORETURN_TITLE'] = 'Module: ';
 Blockly.Msg['MODULES_DEFNORETURN_TOOLTIP'] = 'Creates a module.';
-Blockly.Msg['MODULES_MUTATORARG_TITLE'] = 'port name:';
+Blockly.Msg['MODULES_MUTATORARG_TITLE'] = 'variable name:';
 Blockly.Msg['MODULES_MUTATORARG_TOOLTIP'] = 'Add a port to the module.';
-Blockly.Msg['MODULES_MUTATORCONTAINER_TITLE'] = 'ports';
+Blockly.Msg['MODULES_MUTATORCONTAINER_TITLE'] = 'variables';
 Blockly.Msg['MODULES_CALL_BEFORE_PARAMS'] = 'with ports:';
 Blockly.Msg['MODULES_CALLRETURN_HELPURL'] =
   'https://en.wikipedia.org/wiki/Subroutine';

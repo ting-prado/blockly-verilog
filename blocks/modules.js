@@ -721,11 +721,18 @@ Blockly.Blocks['modules_callnoreturn'] = {
     this.quarkIds_ = null;
     this.previousEnabledState_ = true;
     this.setOnChange(function (changeEvent) {
-      console.log(this);
-      if (this.getRootBlock()) {
+      let arr = this.getInOut();
+      for (let i = 0; i < arr.length; i++) {
+        this.getField('ARGD' + i).markDirty();
+      }
+      if (this.getParent()) {
+        let curBlock = this.getParent();
+        while (curBlock.getParent() !== null) {
+          curBlock = curBlock.getParent();
+        }
         if (
-          this.getRootBlock().getFieldValue('NAME') ==
-          this.getFieldValue('NAME')
+          curBlock.type == 'modules_defnoreturn' &&
+          curBlock.getFieldValue('NAME') == this.getFieldValue('NAME')
         ) {
           this.setWarningText('Connect this block to a different module');
         } else {
@@ -785,9 +792,11 @@ Blockly.Blocks['modules_callnoreturn'] = {
       this.getProcedureCall(),
       this.workspace
     );
-    let paramList = defBlock.getParamInfo();
-    for (let i = 0; i < paramList.length; i++) {
-      paramTypes[i] = paramList[i].type;
+    if (defBlock) {
+      let paramList = defBlock.getParamInfo();
+      for (let i = 0; i < paramList.length; i++) {
+        paramTypes[i] = paramList[i].type;
+      }
     }
     var mutatorOpen =
       defBlock && defBlock.mutator && defBlock.mutator.isVisible();
